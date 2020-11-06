@@ -293,9 +293,6 @@ public class HomeActivity extends FragmentActivity implements
         });
     }
 
-    public void filtrarServicos(List<Prestador> listmapa){
-
-    }
     public boolean verficarPermissoes(){
         List<String> permissoesRequeridas = new ArrayList<>();
         for(String permission : appPermissions){
