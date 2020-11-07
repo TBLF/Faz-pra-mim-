@@ -22,13 +22,14 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ServicosActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
-    private  List<Integer> numeros;
     private int i;
+    private int position[] = new int[3];
     private ImageButton sair,button1,button2,button3,button4,button5,button6,i_button1,i_button2,i_button3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,6 @@ public class ServicosActivity extends AppCompatActivity {
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         databaseReference =  ConfiguracaoFirebase.getFirebaseDatabase().child("Contratante").child(UsuarioFireBase.getUsuarioAtual().getUid().toString()).child("Interface Servico");
-        numeros = new ArrayList<Integer>();
         sair = findViewById(R.id.sair_toolbar);
         button1 = findViewById(R.id.image_button_vassoura);
         button2 = findViewById(R.id.image_button_animais);
@@ -60,11 +60,11 @@ public class ServicosActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    numeros.clear();
-                    int n;
+                    int n,cont=0;
                     for (DataSnapshot d : snapshot.getChildren()) {
                         n = Integer.parseInt(d.child("numero").getValue().toString());
-                        numeros.add(n);
+                        position[cont]= n;
+                        cont++;
                     }
                     carregarImagens();
                 }
@@ -79,16 +79,15 @@ public class ServicosActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                numeros.clear();
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()){
-                            numeros.clear();
-                            int n;
+                            int n,cont=0;
                             for (DataSnapshot d : snapshot.getChildren()) {
                                 n = Integer.parseInt(d.child("numero").getValue().toString());
-                                numeros.add(n);
+                                position[cont]=n;
+                                cont++;
                             }
                             carregarImagens();
                         }
@@ -106,8 +105,8 @@ public class ServicosActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent j = new Intent(getApplicationContext(), HomeActivity.class);
-                for(int x =0;x<numeros.size();x++){
-                    databaseReference.child("Servico "+String.valueOf(x+1)).child("numero").setValue(numeros.get(x));
+                for(int x =0;x<position.length;x++){
+                    databaseReference.child("Servico "+String.valueOf(x+1)).child("numero").setValue(position[x]);
                 }
                 startActivity(j);
             }
@@ -142,21 +141,24 @@ public class ServicosActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(numeros.size()==3){
-                    numeros.clear();
-                }
                 switch (i){
                     case 1:
-                        numeros.add(1);
-                        i_button1.setImageResource(R.drawable.icone_vassoura);
+                        if(position[0]!=1){
+                            position[0]=1;
+                            i_button1.setImageResource(R.drawable.icone_vassoura);
+                        }
                         break;
                     case 2:
-                        numeros.add(1);
-                        i_button2.setImageResource(R.drawable.icone_vassoura);
+                        if(position[1]!=1) {
+                            position[1] = 1;
+                            i_button2.setImageResource(R.drawable.icone_vassoura);
+                        }
                         break;
                     case 3:
-                        numeros.add(1);
-                        i_button3.setImageResource(R.drawable.icone_vassoura);
+                        if(position[2]!=1) {
+                            position[2] = 1;
+                            i_button3.setImageResource(R.drawable.icone_vassoura);
+                        }
                         break;
                 }
             }
@@ -164,21 +166,24 @@ public class ServicosActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(numeros.size()==3){
-                    numeros.clear();
-                }
                 switch (i){
                     case 1:
-                        numeros.add(2);
-                        i_button1.setImageResource(R.drawable.icone_cachorro);
+                        if(position[0]!=2) {
+                            position[0] = 2;
+                            i_button1.setImageResource(R.drawable.icone_cachorro);
+                        }
                         break;
                     case 2:
-                        numeros.add(2);
-                        i_button2.setImageResource(R.drawable.icone_cachorro);
+                        if(position[1]!=2) {
+                            position[1] = 2;
+                            i_button2.setImageResource(R.drawable.icone_cachorro);
+                        }
                         break;
                     case 3:
-                        numeros.add(2);
-                        i_button3.setImageResource(R.drawable.icone_cachorro);
+                        if(position[2]!=2) {
+                            position[2] = 2;
+                            i_button3.setImageResource(R.drawable.icone_cachorro);
+                        }
                         break;
                 }
             }
@@ -187,21 +192,24 @@ public class ServicosActivity extends AppCompatActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(numeros.size()==3){
-                    numeros.clear();
-                }
                 switch (i){
                     case 1:
-                        numeros.add(3);
-                        i_button1.setImageResource(R.drawable.icone_parede_de_tijolos);
+                        if(position[0]!=3) {
+                            position[0] = 3;
+                            i_button1.setImageResource(R.drawable.icone_parede_de_tijolos);
+                        }
                         break;
                     case 2:
-                        numeros.add(3);
-                        i_button2.setImageResource(R.drawable.icone_parede_de_tijolos);
+                        if(position[1]!=3) {
+                            position[1] = 3;
+                            i_button2.setImageResource(R.drawable.icone_parede_de_tijolos);
+                        }
                         break;
                     case 3:
-                        numeros.add(3);
-                        i_button3.setImageResource(R.drawable.icone_parede_de_tijolos);
+                        if(position[2]!=3) {
+                            position[2] = 3;
+                            i_button3.setImageResource(R.drawable.icone_parede_de_tijolos);
+                        }
                         break;
                 }
             }
@@ -210,21 +218,24 @@ public class ServicosActivity extends AppCompatActivity {
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(numeros.size()==3){
-                    numeros.clear();
-                }
                 switch (i){
                     case 1:
-                        numeros.add(4);
-                        i_button1.setImageResource(R.drawable.icone_engenharia);
+                        if(position[0]!=4) {
+                            position[0] = 4;
+                            i_button1.setImageResource(R.drawable.icone_engenharia);
+                        }
                         break;
                     case 2:
-                        numeros.add(4);
-                        i_button2.setImageResource(R.drawable.icone_engenharia);
+                        if(position[1]!=4) {
+                            position[1] = 4;
+                            i_button2.setImageResource(R.drawable.icone_engenharia);
+                        }
                         break;
                     case 3:
-                        numeros.add(4);
-                        i_button3.setImageResource(R.drawable.icone_engenharia);
+                        if(position[2]!=4) {
+                            position[2] = 4;
+                            i_button3.setImageResource(R.drawable.icone_engenharia);
+                        }
                         break;
                 }
             }
@@ -233,21 +244,24 @@ public class ServicosActivity extends AppCompatActivity {
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(numeros.size()==3){
-                    numeros.clear();
-                }
                 switch (i){
                     case 1:
-                        numeros.add(5);
-                        i_button1.setImageResource(R.drawable.icone_encanamento);
+                        if(position[0]!=5) {
+                            position[0] = 5;
+                            i_button1.setImageResource(R.drawable.icone_encanamento);
+                        }
                         break;
                     case 2:
-                        numeros.add(5);
-                        i_button2.setImageResource(R.drawable.icone_encanamento);
+                        if(position[1]!=5) {
+                            position[1] = 5;
+                            i_button2.setImageResource(R.drawable.icone_encanamento);
+                        }
                         break;
                     case 3:
-                        numeros.add(5);
-                        i_button3.setImageResource(R.drawable.icone_encanamento);
+                        if(position[2]!=5) {
+                            position[2] = 5;
+                            i_button3.setImageResource(R.drawable.icone_encanamento);
+                        }
                         break;
                 }
             }
@@ -255,21 +269,24 @@ public class ServicosActivity extends AppCompatActivity {
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(numeros.size()==3){
-                    numeros.clear();
-                }
                 switch (i){
                     case 1:
-                        numeros.add(6);
-                        i_button1.setImageResource(R.drawable.icone_relampago);
+                        if(position[0]!=6) {
+                            position[0] = 6;
+                            i_button1.setImageResource(R.drawable.icone_relampago);
+                        }
                         break;
                     case 2:
-                        numeros.add(6);
-                        i_button2.setImageResource(R.drawable.icone_relampago);
+                        if(position[1]!=6) {
+                            position[1] = 6;
+                            i_button2.setImageResource(R.drawable.icone_relampago);
+                        }
                         break;
                     case 3:
-                        numeros.add(6);
-                        i_button3.setImageResource(R.drawable.icone_relampago);
+                        if(position[2]!=6) {
+                            position[2] = 6;
+                            i_button3.setImageResource(R.drawable.icone_relampago);
+                        }
                         break;
                 }
             }
@@ -282,8 +299,8 @@ public class ServicosActivity extends AppCompatActivity {
     }
 
     private void carregarImagens(){
-        if(numeros.size()<4){
-            switch (numeros.get(0)){
+        if(position.length<4){
+            switch (position[0]){
                 case 1:
                     i_button1.setImageResource(R.drawable.icone_vassoura);
                     break;
@@ -294,16 +311,16 @@ public class ServicosActivity extends AppCompatActivity {
                     i_button1.setImageResource(R.drawable.icone_parede_de_tijolos);
                     break;
                 case 4:
-                    i_button1.setImageResource(R.drawable.icone_encanamento);
+                    i_button1.setImageResource(R.drawable.icone_engenharia);
                     break;
                 case 5:
-                    i_button1.setImageResource(R.drawable.icone_engenharia);
+                     i_button1.setImageResource(R.drawable.icone_encanamento);
                     break;
                 case 6:
                     i_button1.setImageResource(R.drawable.icone_relampago);
                     break;
             }
-            switch (numeros.get(1)){
+            switch (position[1]){
                 case 1:
                     i_button2.setImageResource(R.drawable.icone_vassoura);
                     break;
@@ -323,7 +340,7 @@ public class ServicosActivity extends AppCompatActivity {
                     i_button2.setImageResource(R.drawable.icone_relampago);
                     break;
             }
-            switch (numeros.get(2)){
+            switch (position[2]){
                 case 1:
                     i_button3.setImageResource(R.drawable.icone_vassoura);
                     break;

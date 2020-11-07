@@ -49,7 +49,7 @@ public class PrincipalFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private List<Prestador> lista;
     private DatabaseReference reference,refImg;
-    private List<Integer> numeros;
+    private int numeros[] = new int[3];
     private ImageButton imageButton,imageButton2,imageButton3,btn_irTelaServic;
     private AdapterPesquisa adapterPesquisa;
 
@@ -97,8 +97,7 @@ public class PrincipalFragment extends Fragment {
         SearchView searchView = v.findViewById(R.id.searchViewPesquisa);
         RecyclerView recyclerView = v.findViewById(R.id.recyclerPesquisa);
         lista = new ArrayList<Prestador>();
-        adapterPesquisa = new AdapterPesquisa(lista,getActivity());
-        numeros = new ArrayList<Integer>();
+        adapterPesquisa = new AdapterPesquisa(lista,getActivity());;
         reference = ConfiguracaoFirebase.getFirebaseDatabase().child("Prestador");
         refImg = ConfiguracaoFirebase.getFirebaseDatabase().child("Contratante").child(UsuarioFireBase.getUsuarioAtual().getUid().toString()).child("Interface Servico");
 
@@ -117,10 +116,11 @@ public class PrincipalFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    int n;
+                    int n,cont=0;
                     for (DataSnapshot d : snapshot.getChildren()) {
                         n = Integer.parseInt(d.child("numero").getValue().toString());
-                        numeros.add(n);
+                        numeros[cont] = n;
+                        cont++;
                     }
                     carregarImagens();
                 }
@@ -213,8 +213,8 @@ public class PrincipalFragment extends Fragment {
     }
 
     private  void carregarImagens(){
-        if(numeros.size()<4){
-            switch (numeros.get(0)){
+        if(numeros.length<4){
+            switch (numeros[0]){
                 case 1:
                     imageButton.setImageResource(R.drawable.icone_vassoura);
                     break;
@@ -234,7 +234,7 @@ public class PrincipalFragment extends Fragment {
                     imageButton.setImageResource(R.drawable.icone_relampago);
                     break;
             }
-            switch (numeros.get(1)){
+            switch (numeros[1]){
                 case 1:
                     imageButton2.setImageResource(R.drawable.icone_vassoura);
                     break;
@@ -245,16 +245,16 @@ public class PrincipalFragment extends Fragment {
                     imageButton2.setImageResource(R.drawable.icone_parede_de_tijolos);
                     break;
                 case 4:
-                    imageButton2.setImageResource(R.drawable.icone_encanamento);
+                    imageButton2.setImageResource(R.drawable.icone_engenharia);
                     break;
                 case 5:
-                    imageButton2.setImageResource(R.drawable.icone_engenharia);
+                    imageButton2.setImageResource(R.drawable.icone_encanamento);
                     break;
                 case 6:
                     imageButton2.setImageResource(R.drawable.icone_relampago);
                     break;
             }
-            switch (numeros.get(2)){
+            switch (numeros[2]){
                 case 1:
                     imageButton3.setImageResource(R.drawable.icone_vassoura);
                     break;
