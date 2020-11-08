@@ -8,12 +8,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +21,7 @@ import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.bumptech.glide.load.engine.Resource;
 import com.example.fpm.config.ConfiguracaoFirebase;
 import com.example.fpm.adapter.ListPrestadorAdapter;
 import com.example.fpm.R;
@@ -31,7 +29,6 @@ import com.example.fpm.fragment.AnteriorFragment;
 import com.example.fpm.fragment.PerfilFragment;
 import com.example.fpm.fragment.PrincipalFragment;
 import com.example.fpm.moldes.Prestador;
-import com.google.android.gms.common.util.Strings;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -52,8 +49,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.fpm.fragment.PrincipalFragment.constraintLayout;
+import static com.example.fpm.fragment.PrincipalFragment.numeros;
 import static com.example.fpm.fragment.PrincipalFragment.textNome;
 import static com.example.fpm.fragment.PrincipalFragment.button;
+import static com.example.fpm.fragment.PrincipalFragment.imageButton3;
+import static com.example.fpm.fragment.PrincipalFragment.imageButton2;
+import static com.example.fpm.fragment.PrincipalFragment.imageButton;
 import static com.example.fpm.activity.LoginActivity.u;
 
 
@@ -69,8 +70,7 @@ public class HomeActivity extends FragmentActivity implements
     private ListPrestadorAdapter adapter;
     public static String UidPrestador;
     public static String NomePrestador;
-    private FloatingActionButton fabLocalizaoAtual, floatingActionButton;;
-    private  LatLng meuLocal = null;
+    private FloatingActionButton floatingActionButton;;
     private Switch aSwitch;
     private String[] appPermissions = null;
     private static final int CODIGO_PERMISSOES_REQUERIDAS = 1;
@@ -89,28 +89,34 @@ public class HomeActivity extends FragmentActivity implements
     }
 
     private void IniciarComponents() {
+        //referenciando e inicializando componentes
         scrollView = findViewById(R.id.scroll_view);
         listPrestador = findViewById(R.id.list_prestador);
         floatingActionButton = findViewById(R.id.floatingActionButton2);
         prestadorItem = new ArrayList<Prestador>();
         prestadorLatLngId = new ArrayList<Prestador>();
+
+        //atribuindo permissões a um array
         appPermissions = new String[]{
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.READ_EXTERNAL_STORAGE
         };
+
+        // variavel de verificação para carregamento de imagem;
         u=true;
 
+        //configurando listadapter de histórico do usuário
         prestadorItem.add(new Prestador("Tiago Brasil Lima", "23/12/2020", R.drawable.imagem_fotouser));
         prestadorItem.add(new Prestador("Lúcia Pires", "25/03/2020", R.drawable.imagem_fotouser));
         prestadorItem.add(new Prestador("Adriano", "30/109/2020", R.drawable.imagem_fotouser));
         adapter = new ListPrestadorAdapter(prestadorItem, this);
         listPrestador.setAdapter(adapter);
-
+        //configurando botton navgation
         ConfiguraBottomNavigation();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-
+        // configuração para inicialização na tela de perfil vindo da tela de editarDados
         BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bnve);
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem;
@@ -125,7 +131,7 @@ public class HomeActivity extends FragmentActivity implements
         } else {
             fragmentTransaction.replace(R.id.view_pager, new PrincipalFragment()).commit();
         }
-
+        //esconder componentes que aparecem na tela principal
         scrollView.setVisibility(View.INVISIBLE);
         floatingActionButton.setVisibility(View.INVISIBLE);
     }
@@ -178,6 +184,7 @@ public class HomeActivity extends FragmentActivity implements
         });
     }
 
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
@@ -189,7 +196,7 @@ public class HomeActivity extends FragmentActivity implements
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(HomeActivity.this, R.raw.style_json3));
         if(verficarPermissoes()) {
             recuperarLocalizacaoUsuario();
-            recuperarLocalizacoes();
+            recuperarLocalizacoes(0);
         }else{
             Toast.makeText(this, "Nem todas as permissões estão ativas", Toast.LENGTH_SHORT).show();
             finish();
@@ -205,6 +212,35 @@ public class HomeActivity extends FragmentActivity implements
                     aSwitch.setTextColor(getResources().getColor(R.color.white));
 
                 }
+            }
+        });
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                constraintLayout.setVisibility(View.INVISIBLE);
+                mMap.clear();
+                prestadorLatLngId.clear();
+                recuperarLocalizacoes(numeros[0]);
+            }
+        });
+
+        imageButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                constraintLayout.setVisibility(View.INVISIBLE);
+                mMap.clear();
+                prestadorLatLngId.clear();
+                recuperarLocalizacoes(numeros[1]);
+            }
+        });
+
+        imageButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                constraintLayout.setVisibility(View.INVISIBLE);
+                mMap.clear();
+                prestadorLatLngId.clear();
+                recuperarLocalizacoes(numeros[2]);
             }
         });
 
@@ -256,41 +292,113 @@ public class HomeActivity extends FragmentActivity implements
     private void recuperarLocalizacaoUsuario() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
-            mMap.setPadding(0,1300,30,0);
         }
     }
 
-    private void recuperarLocalizacoes(){
+    private boolean recuperarLocalizacoes(int num) {
         DatabaseReference prestadorplaceDatabse = ConfiguracaoFirebase.getFirebaseDatabase().child("Prestador");
-
-        prestadorplaceDatabse.addValueEventListener (new ValueEventListener() {
+        final boolean[] cond = {false};
+        prestadorplaceDatabse.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     LatLng newPosition = null;
-                    for (DataSnapshot d : snapshot.getChildren()) {
-                        String nome = d.child("Nome").getValue().toString();
-                        String uId =d.child("uid").getValue().toString();
-                        double lat = (double) d.child("LatAtual").getValue();
-                        double longitude = (double) d.child("LongAtual").getValue();
-                        newPosition = new LatLng(lat, longitude);
 
-                        mMap.addMarker(
-                                new MarkerOptions()
-                                        .position(newPosition)
-                                        .title(nome)
-                                        .icon(BitmapDescriptorFactory.defaultMarker())
-                        );
-                        prestadorLatLngId.add(new Prestador(newPosition,uId, nome));
+                    if (num == 0) {
+                        for (DataSnapshot d : snapshot.getChildren()) {
+                            String nome = d.child("Nome").getValue().toString();
+                            String uId = d.child("uid").getValue().toString();
+                            double lat = (double) d.child("LatAtual").getValue();
+                            double longitude = (double) d.child("LongAtual").getValue();
+                            newPosition = new LatLng(lat, longitude);
 
+                            mMap.addMarker(
+                                    new MarkerOptions()
+                                            .position(newPosition)
+                                            .title(nome)
+                                            .icon(BitmapDescriptorFactory.defaultMarker())
+                            );
+                            prestadorLatLngId.add(new Prestador(newPosition, uId, nome));
+
+                        }
+                    } else {
+                        for (DataSnapshot d : snapshot.getChildren()) {
+                            if (Integer.parseInt(d.child("Tipo").getValue().toString()) == num) {
+
+                                String nome = d.child("Nome").getValue().toString();
+                                String uId = d.child("uid").getValue().toString();
+                                double lat = (double) d.child("LatAtual").getValue();
+                                double longitude = (double) d.child("LongAtual").getValue();
+                                newPosition = new LatLng(lat, longitude);
+
+                                switch (num){
+                                    case 1:
+                                        mMap.addMarker(
+                                                new MarkerOptions()
+                                                        .position(newPosition)
+                                                        .title(nome)
+                                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                                        );
+                                        break;
+                                    case 2:
+                                        mMap.addMarker(
+                                                new MarkerOptions()
+                                                        .position(newPosition)
+                                                        .title(nome)
+                                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN))
+                                        );
+                                        break;
+                                    case 3:
+                                        mMap.addMarker(
+                                                new MarkerOptions()
+                                                        .position(newPosition)
+                                                        .title(nome)
+                                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
+                                        );
+                                        break;
+                                    case 4:
+                                        mMap.addMarker(
+                                                new MarkerOptions()
+                                                        .position(newPosition)
+                                                        .title(nome)
+                                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)
+                                        ));
+                                        break;
+                                    case 5:
+                                        mMap.addMarker(
+                                                new MarkerOptions()
+                                                        .position(newPosition)
+                                                        .title(nome)
+                                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                                        );
+                                        break;
+                                    case 6:
+                                        mMap.addMarker(
+                                                new MarkerOptions()
+                                                        .position(newPosition)
+                                                        .title(nome)
+                                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                                        );
+                                        break;
+
+                                }
+
+                                prestadorLatLngId.add(new Prestador(newPosition, uId, nome));
+
+                            }
+                        }
+                        cond[0] = true;
                     }
+
                 }
             }
+
             @Override
-            public void onCancelled (@NonNull DatabaseError error){
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
+        return cond[0];
     }
 
     public boolean verficarPermissoes(){

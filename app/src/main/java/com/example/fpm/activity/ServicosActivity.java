@@ -141,50 +141,42 @@ public class ServicosActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (i){
-                    case 1:
-                        if(position[0]!=1){
-                            position[0]=1;
-                            i_button1.setImageResource(R.drawable.icone_vassoura);
-                        }
-                        break;
-                    case 2:
-                        if(position[1]!=1) {
-                            position[1] = 1;
-                            i_button2.setImageResource(R.drawable.icone_vassoura);
-                        }
-                        break;
-                    case 3:
-                        if(position[2]!=1) {
-                            position[2] = 1;
-                            i_button3.setImageResource(R.drawable.icone_vassoura);
-                        }
-                        break;
+                if(numeroJaRegistrado(1)==false){
+                    switch (i){
+                        case 1:
+                                position[0]=1;
+                                i_button1.setImageResource(R.drawable.icone_vassoura);
+                            break;
+                        case 2:
+                                position[1] = 1;
+                                i_button2.setImageResource(R.drawable.icone_vassoura);
+                            break;
+                        case 3:
+                                position[2] = 1;
+                                i_button3.setImageResource(R.drawable.icone_vassoura);
+                            break;
+                    }
                 }
             }
         });
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (i){
-                    case 1:
-                        if(position[0]!=2) {
-                            position[0] = 2;
-                            i_button1.setImageResource(R.drawable.icone_cachorro);
-                        }
-                        break;
-                    case 2:
-                        if(position[1]!=2) {
-                            position[1] = 2;
-                            i_button2.setImageResource(R.drawable.icone_cachorro);
-                        }
-                        break;
-                    case 3:
-                        if(position[2]!=2) {
-                            position[2] = 2;
-                            i_button3.setImageResource(R.drawable.icone_cachorro);
-                        }
-                        break;
+                if(numeroJaRegistrado(2)==false) {
+                    switch (i) {
+                        case 1:
+                                position[0] = 2;
+                                i_button1.setImageResource(R.drawable.icone_cachorro);
+                            break;
+                        case 2:
+                                position[1] = 2;
+                                i_button2.setImageResource(R.drawable.icone_cachorro);
+                            break;
+                        case 3:
+                                position[2] = 2;
+                                i_button3.setImageResource(R.drawable.icone_cachorro);
+                            break;
+                    }
                 }
             }
         });
@@ -192,25 +184,21 @@ public class ServicosActivity extends AppCompatActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (i){
-                    case 1:
-                        if(position[0]!=3) {
-                            position[0] = 3;
-                            i_button1.setImageResource(R.drawable.icone_parede_de_tijolos);
-                        }
-                        break;
-                    case 2:
-                        if(position[1]!=3) {
-                            position[1] = 3;
-                            i_button2.setImageResource(R.drawable.icone_parede_de_tijolos);
-                        }
-                        break;
-                    case 3:
-                        if(position[2]!=3) {
-                            position[2] = 3;
-                            i_button3.setImageResource(R.drawable.icone_parede_de_tijolos);
-                        }
-                        break;
+                if(numeroJaRegistrado(3)==false) {
+                    switch (i) {
+                        case 1:
+                                position[0] = 3;
+                                i_button1.setImageResource(R.drawable.icone_parede_de_tijolos);
+                            break;
+                        case 2:
+                                position[1] = 3;
+                                i_button2.setImageResource(R.drawable.icone_parede_de_tijolos);
+                            break;
+                        case 3:
+                                position[2] = 3;
+                                i_button3.setImageResource(R.drawable.icone_parede_de_tijolos);
+                            break;
+                    }
                 }
             }
         });
@@ -218,25 +206,21 @@ public class ServicosActivity extends AppCompatActivity {
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (i){
-                    case 1:
-                        if(position[0]!=4) {
+                if(numeroJaRegistrado(4)==false) {
+                    switch (i) {
+                        case 1:
                             position[0] = 4;
                             i_button1.setImageResource(R.drawable.icone_engenharia);
-                        }
-                        break;
-                    case 2:
-                        if(position[1]!=4) {
+                            break;
+                        case 2:
                             position[1] = 4;
                             i_button2.setImageResource(R.drawable.icone_engenharia);
-                        }
-                        break;
-                    case 3:
-                        if(position[2]!=4) {
+                            break;
+                        case 3:
                             position[2] = 4;
                             i_button3.setImageResource(R.drawable.icone_engenharia);
-                        }
-                        break;
+                            break;
+                    }
                 }
             }
         });
@@ -244,50 +228,42 @@ public class ServicosActivity extends AppCompatActivity {
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (i){
-                    case 1:
-                        if(position[0]!=5) {
+                if(numeroJaRegistrado(5)==false) {
+                    switch (i) {
+                        case 1:
                             position[0] = 5;
                             i_button1.setImageResource(R.drawable.icone_encanamento);
-                        }
-                        break;
-                    case 2:
-                        if(position[1]!=5) {
+                            break;
+                        case 2:
                             position[1] = 5;
                             i_button2.setImageResource(R.drawable.icone_encanamento);
-                        }
-                        break;
-                    case 3:
-                        if(position[2]!=5) {
+                            break;
+                        case 3:
                             position[2] = 5;
                             i_button3.setImageResource(R.drawable.icone_encanamento);
-                        }
-                        break;
+                            break;
+                    }
                 }
             }
         });
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (i){
-                    case 1:
-                        if(position[0]!=6) {
+                if(numeroJaRegistrado(6)==false) {
+                    switch (i) {
+                        case 1:
                             position[0] = 6;
                             i_button1.setImageResource(R.drawable.icone_relampago);
-                        }
-                        break;
-                    case 2:
-                        if(position[1]!=6) {
+                            break;
+                        case 2:
                             position[1] = 6;
                             i_button2.setImageResource(R.drawable.icone_relampago);
-                        }
-                        break;
-                    case 3:
-                        if(position[2]!=6) {
+                            break;
+                        case 3:
                             position[2] = 6;
                             i_button3.setImageResource(R.drawable.icone_relampago);
-                        }
-                        break;
+                            break;
+                    }
                 }
             }
         });
@@ -296,6 +272,14 @@ public class ServicosActivity extends AppCompatActivity {
 
 
 
+    }
+    private boolean numeroJaRegistrado(int num){
+        for(int x =0; x<position.length;x++){
+            if(num == position[x]){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void carregarImagens(){
@@ -311,10 +295,10 @@ public class ServicosActivity extends AppCompatActivity {
                     i_button1.setImageResource(R.drawable.icone_parede_de_tijolos);
                     break;
                 case 4:
-                    i_button1.setImageResource(R.drawable.icone_engenharia);
+                    i_button3.setImageResource(R.drawable.icone_engenharia);
                     break;
                 case 5:
-                     i_button1.setImageResource(R.drawable.icone_encanamento);
+                    i_button3.setImageResource(R.drawable.icone_encanamento);
                     break;
                 case 6:
                     i_button1.setImageResource(R.drawable.icone_relampago);
@@ -331,10 +315,10 @@ public class ServicosActivity extends AppCompatActivity {
                     i_button2.setImageResource(R.drawable.icone_parede_de_tijolos);
                     break;
                 case 4:
-                    i_button2.setImageResource(R.drawable.icone_encanamento);
+                    i_button3.setImageResource(R.drawable.icone_engenharia);
                     break;
                 case 5:
-                    i_button2.setImageResource(R.drawable.icone_engenharia);
+                    i_button3.setImageResource(R.drawable.icone_encanamento);
                     break;
                 case 6:
                     i_button2.setImageResource(R.drawable.icone_relampago);
@@ -351,10 +335,10 @@ public class ServicosActivity extends AppCompatActivity {
                     i_button3.setImageResource(R.drawable.icone_parede_de_tijolos);
                     break;
                 case 4:
-                    i_button3.setImageResource(R.drawable.icone_encanamento);
+                    i_button3.setImageResource(R.drawable.icone_engenharia);
                     break;
                 case 5:
-                    i_button3.setImageResource(R.drawable.icone_engenharia);
+                    i_button3.setImageResource(R.drawable.icone_encanamento);
                     break;
                 case 6:
                     i_button3.setImageResource(R.drawable.icone_relampago);

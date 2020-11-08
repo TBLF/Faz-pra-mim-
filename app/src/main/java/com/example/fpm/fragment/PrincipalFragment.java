@@ -23,13 +23,11 @@ import com.example.fpm.adapter.AdapterPesquisa;
 import com.example.fpm.config.ConfiguracaoFirebase;
 import com.example.fpm.config.UsuarioFireBase;
 import com.example.fpm.moldes.Prestador;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,8 +47,9 @@ public class PrincipalFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private List<Prestador> lista;
     private DatabaseReference reference,refImg;
-    private int numeros[] = new int[3];
-    private ImageButton imageButton,imageButton2,imageButton3,btn_irTelaServic;
+    public static int numeros[] = new int[3];
+    public static ImageButton imageButton,imageButton2,imageButton3;
+    private ImageButton btn_irTelaServic,cancel;
     private AdapterPesquisa adapterPesquisa;
 
 
@@ -94,22 +93,25 @@ public class PrincipalFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_principal, container, false);
+        //Configurando mecanismo de pesquisa
         SearchView searchView = v.findViewById(R.id.searchViewPesquisa);
         RecyclerView recyclerView = v.findViewById(R.id.recyclerPesquisa);
         lista = new ArrayList<Prestador>();
         adapterPesquisa = new AdapterPesquisa(lista,getActivity());;
+
+        //Referenciando banco de dados
         reference = ConfiguracaoFirebase.getFirebaseDatabase().child("Prestador");
         refImg = ConfiguracaoFirebase.getFirebaseDatabase().child("Contratante").child(UsuarioFireBase.getUsuarioAtual().getUid().toString()).child("Interface Servico");
 
+        //Referenciando objetos
         btn_irTelaServic = v.findViewById(R.id.btn_irTelaServicos);
         constraintLayout= v.findViewById(R.id.bloco_de_dados);
         constraintLayout.setVisibility(View.INVISIBLE);
         button = v.findViewById(R.id.btn_negociar);
-        textNome = v.findViewById(R.id.textNome);
-        ImageButton cancel = v.findViewById(R.id.cancel);
-        imageButton = v.findViewById(R.id.image_button_cao);
+        cancel = v.findViewById(R.id.cancel);
+        imageButton3 = v.findViewById(R.id.image_button_cao);
         imageButton2 = v.findViewById(R.id.image_button_vassoura);
-        imageButton3= v.findViewById(R.id.image_button_tijolos);
+        imageButton= v.findViewById(R.id.image_button_tijolos);
 
 
         refImg.addValueEventListener(new ValueEventListener() {
@@ -155,24 +157,7 @@ public class PrincipalFragment extends Fragment {
                 constraintLayout.setVisibility(View.INVISIBLE);
             }
         });
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { constraintLayout.setVisibility(View.INVISIBLE); }
-        });
 
-        imageButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                constraintLayout.setVisibility(View.INVISIBLE);
-            }
-        });
-
-        imageButton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                constraintLayout.setVisibility(View.INVISIBLE);
-            }
-        });
         btn_irTelaServic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -225,10 +210,10 @@ public class PrincipalFragment extends Fragment {
                     imageButton.setImageResource(R.drawable.icone_parede_de_tijolos);
                     break;
                 case 4:
-                    imageButton.setImageResource(R.drawable.icone_encanamento);
+                    imageButton.setImageResource(R.drawable.icone_engenharia);
                     break;
                 case 5:
-                    imageButton.setImageResource(R.drawable.icone_engenharia);
+                    imageButton.setImageResource(R.drawable.icone_encanamento);
                     break;
                 case 6:
                     imageButton.setImageResource(R.drawable.icone_relampago);
@@ -245,10 +230,10 @@ public class PrincipalFragment extends Fragment {
                     imageButton2.setImageResource(R.drawable.icone_parede_de_tijolos);
                     break;
                 case 4:
-                    imageButton2.setImageResource(R.drawable.icone_engenharia);
+                    imageButton.setImageResource(R.drawable.icone_engenharia);
                     break;
                 case 5:
-                    imageButton2.setImageResource(R.drawable.icone_encanamento);
+                    imageButton.setImageResource(R.drawable.icone_encanamento);
                     break;
                 case 6:
                     imageButton2.setImageResource(R.drawable.icone_relampago);
@@ -265,10 +250,10 @@ public class PrincipalFragment extends Fragment {
                     imageButton3.setImageResource(R.drawable.icone_parede_de_tijolos);
                     break;
                 case 4:
-                    imageButton3.setImageResource(R.drawable.icone_encanamento);
+                    imageButton.setImageResource(R.drawable.icone_engenharia);
                     break;
                 case 5:
-                    imageButton3.setImageResource(R.drawable.icone_engenharia);
+                    imageButton.setImageResource(R.drawable.icone_encanamento);
                     break;
                 case 6:
                     imageButton3.setImageResource(R.drawable.icone_relampago);
