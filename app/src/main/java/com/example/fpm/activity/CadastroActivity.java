@@ -2,27 +2,19 @@ package com.example.fpm.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Size;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.fpm.R;
-import com.example.fpm.config.ConfiguracaoFirebase;
-import com.example.fpm.moldes.Usuario;
+
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.storage.StorageReference;
 import com.santalu.maskara.widget.MaskEditText;
 import static com.example.fpm.activity.LoginActivity.u;
 
@@ -36,7 +28,6 @@ public class CadastroActivity extends AppCompatActivity {
     private static final int SELECA0_GALERIA =200;
     private CircleImageView circleImageViewPerfil;
     public static  Bitmap imagem ;
-    public static Usuario usuario = new Usuario();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

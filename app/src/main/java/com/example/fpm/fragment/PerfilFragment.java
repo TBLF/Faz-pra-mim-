@@ -1,16 +1,12 @@
 package com.example.fpm.fragment;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,16 +14,10 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.fpm.R;
 import com.example.fpm.activity.EditarPerfilActivity;
-import com.example.fpm.activity.HomeActivity;
 import com.example.fpm.config.ConfiguracaoFirebase;
 import com.example.fpm.config.UsuarioFireBase;
-import com.example.fpm.moldes.Prestador;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -109,7 +99,7 @@ public class PerfilFragment extends Fragment {
         textEndereco =  v.findViewById(R.id.text_endereco);
         img = v.findViewById(R.id.profile_image);
 
-        if(u==true){
+        if(u==true&&strg!=null){
             Glide.with(getContext())
                     .using(new FirebaseImageLoader())
                     .load(strg)

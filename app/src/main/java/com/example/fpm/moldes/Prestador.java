@@ -26,6 +26,10 @@ public class Prestador {
         this.uid = uid;
         this.nome = nome;
     }
+    public Prestador(String endereco,String nome) {
+        this.endereco = endereco;
+        this.nome = nome;
+    }
 
     public Prestador() {
     }

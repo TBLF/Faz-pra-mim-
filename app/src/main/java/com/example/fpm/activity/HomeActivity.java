@@ -10,21 +10,20 @@ import androidx.fragment.app.FragmentTransaction;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.ListView;
-import android.widget.ScrollView;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.bumptech.glide.load.engine.Resource;
 import com.example.fpm.config.ConfiguracaoFirebase;
-import com.example.fpm.adapter.ListPrestadorAdapter;
 import com.example.fpm.R;
+import com.example.fpm.config.UsuarioFireBase;
 import com.example.fpm.fragment.AnteriorFragment;
 import com.example.fpm.fragment.PerfilFragment;
 import com.example.fpm.fragment.PrincipalFragment;
@@ -39,7 +38,6 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,13 +47,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.fpm.fragment.PrincipalFragment.constraintLayout;
-import static com.example.fpm.fragment.PrincipalFragment.numeros;
 import static com.example.fpm.fragment.PrincipalFragment.textNome;
 import static com.example.fpm.fragment.PrincipalFragment.button;
-import static com.example.fpm.fragment.PrincipalFragment.imageButton3;
-import static com.example.fpm.fragment.PrincipalFragment.imageButton2;
-import static com.example.fpm.fragment.PrincipalFragment.imageButton;
 import static com.example.fpm.activity.LoginActivity.u;
+
+
 
 
 public class HomeActivity extends FragmentActivity implements
@@ -63,17 +59,15 @@ public class HomeActivity extends FragmentActivity implements
         OnMapReadyCallback {
     public static int f;
     private GoogleMap mMap;
-    private ScrollView scrollView;
-    private List<Prestador> prestadorItem;
     private List<Prestador> prestadorLatLngId;
-    private ListView listPrestador;
-    private ListPrestadorAdapter adapter;
     public static String UidPrestador;
     public static String NomePrestador;
-    private FloatingActionButton floatingActionButton;;
+    public static int numeros[] = new int[3];
     private Switch aSwitch;
     private String[] appPermissions = null;
     private static final int CODIGO_PERMISSOES_REQUERIDAS = 1;
+    private ImageButton imageButton,imageButton2,imageButton3,btn_irTelaServic,cancel;
+    private LinearLayout linearButtons;
 
 
     @Override
@@ -86,37 +80,90 @@ public class HomeActivity extends FragmentActivity implements
         mapFragment.getMapAsync(this);
 
         IniciarComponents();
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                constraintLayout.setVisibility(View.INVISIBLE);
+                mMap.clear();
+                recuperarLocalizacoes(numeros[0]);
+            }
+        });
+
+        imageButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                constraintLayout.setVisibility(View.INVISIBLE);
+                mMap.clear();
+                recuperarLocalizacoes(numeros[1]);
+            }
+        });
+
+        imageButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                constraintLayout.setVisibility(View.INVISIBLE);
+                mMap.clear();
+                recuperarLocalizacoes(numeros[2]);
+            }
+        });
+          btn_irTelaServic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this,ServicosActivity.class);
+                startActivity(i);
+
+            }
+        });
+
+
     }
 
     private void IniciarComponents() {
         //referenciando e inicializando componentes
-        scrollView = findViewById(R.id.scroll_view);
-        listPrestador = findViewById(R.id.list_prestador);
-        floatingActionButton = findViewById(R.id.floatingActionButton2);
-        prestadorItem = new ArrayList<Prestador>();
+        DatabaseReference refImg = ConfiguracaoFirebase.getFirebaseDatabase().child("Contratante").child(UsuarioFireBase.getUsuarioAtual().getUid().toString()).child("Interface Servico");
         prestadorLatLngId = new ArrayList<Prestador>();
+        imageButton3 = findViewById(R.id.image_button_cao);
+        imageButton2 = findViewById(R.id.image_button_vassoura);
+        imageButton= findViewById(R.id.image_button_tijolos);
+        btn_irTelaServic = findViewById(R.id.btn_irTelaServicos);
+        linearButtons = findViewById(R.id.linearButtons);
 
         //atribuindo permissões a um array
         appPermissions = new String[]{
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.READ_EXTERNAL_STORAGE
         };
-
-        // variavel de verificação para carregamento de imagem;
+        //reniciando variavel de verificação de imagem
         u=true;
 
-        //configurando listadapter de histórico do usuário
-        prestadorItem.add(new Prestador("Tiago Brasil Lima", "23/12/2020", R.drawable.imagem_fotouser));
-        prestadorItem.add(new Prestador("Lúcia Pires", "25/03/2020", R.drawable.imagem_fotouser));
-        prestadorItem.add(new Prestador("Adriano", "30/109/2020", R.drawable.imagem_fotouser));
-        adapter = new ListPrestadorAdapter(prestadorItem, this);
-        listPrestador.setAdapter(adapter);
+        //carregando posição dos botões
+        refImg.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    int n,cont=0;
+                    for (DataSnapshot d : snapshot.getChildren()) {
+                        n = Integer.parseInt(d.child("numero").getValue().toString());
+                        numeros[cont] = n;
+                        cont++;
+                    }
+                    carregarImagens();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         //configurando botton navgation
         ConfiguraBottomNavigation();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        // configuração para inicialização na tela de perfil vindo da tela de editarDados
+        // configuração para inicialização na tela de perfil vindo da tela de editarPerfil
         BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bnve);
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem;
@@ -131,9 +178,6 @@ public class HomeActivity extends FragmentActivity implements
         } else {
             fragmentTransaction.replace(R.id.view_pager, new PrincipalFragment()).commit();
         }
-        //esconder componentes que aparecem na tela principal
-        scrollView.setVisibility(View.INVISIBLE);
-        floatingActionButton.setVisibility(View.INVISIBLE);
     }
 
 
@@ -162,20 +206,14 @@ public class HomeActivity extends FragmentActivity implements
                 switch (menuItem.getItemId()) {
                     case R.id.ic_home:
                         aSwitch.setVisibility(View.VISIBLE);
-                        scrollView.setVisibility(View.INVISIBLE);
-                        floatingActionButton.setVisibility(View.INVISIBLE);
                         fragmentTransaction.replace(R.id.view_pager, new PrincipalFragment()).commit();
                         return true;
                     case R.id.ic_contacts:
                         aSwitch.setVisibility(View.INVISIBLE);
-                        scrollView.setVisibility(View.VISIBLE);
-                        floatingActionButton.setVisibility(View.VISIBLE);
                         fragmentTransaction.replace(R.id.view_pager, new AnteriorFragment()).commit();
                         return true;
                     case R.id.ic_perfil:
                         aSwitch.setVisibility(View.INVISIBLE);
-                        scrollView.setVisibility(View.INVISIBLE);
-                        floatingActionButton.setVisibility(View.INVISIBLE);
                         fragmentTransaction.replace(R.id.view_pager, new PerfilFragment()).commit();
                         return true;
                 }
@@ -214,35 +252,6 @@ public class HomeActivity extends FragmentActivity implements
                 }
             }
         });
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                constraintLayout.setVisibility(View.INVISIBLE);
-                mMap.clear();
-                prestadorLatLngId.clear();
-                recuperarLocalizacoes(numeros[0]);
-            }
-        });
-
-        imageButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                constraintLayout.setVisibility(View.INVISIBLE);
-                mMap.clear();
-                prestadorLatLngId.clear();
-                recuperarLocalizacoes(numeros[1]);
-            }
-        });
-
-        imageButton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                constraintLayout.setVisibility(View.INVISIBLE);
-                mMap.clear();
-                prestadorLatLngId.clear();
-                recuperarLocalizacoes(numeros[2]);
-            }
-        });
 
     }
 
@@ -265,12 +274,15 @@ public class HomeActivity extends FragmentActivity implements
 
         }
 
-        for (int ij = 0; ij < prestadorLatLngId.size(); ij++) {
+
+      for (int ij = 0; ij < prestadorLatLngId.size(); ij++) {
             if (prestadorLatLngId.get(ij).getLatLngPrestador().equals(marker.getPosition())) {
                 uid = prestadorLatLngId.get(ij).getUid();
                 nome = prestadorLatLngId.get(ij).getNome();
+
             }
         }
+
         if (!uid.isEmpty()) {
             UidPrestador = uid;
             NomePrestador = nome;
@@ -296,6 +308,7 @@ public class HomeActivity extends FragmentActivity implements
     }
 
     private boolean recuperarLocalizacoes(int num) {
+        prestadorLatLngId.clear();
         DatabaseReference prestadorplaceDatabse = ConfiguracaoFirebase.getFirebaseDatabase().child("Prestador");
         final boolean[] cond = {false};
         prestadorplaceDatabse.addValueEventListener(new ValueEventListener() {
@@ -399,6 +412,73 @@ public class HomeActivity extends FragmentActivity implements
             }
         });
         return cond[0];
+    }
+    private  void carregarImagens(){
+        if(numeros.length<4){
+            switch (numeros[0]){
+                case 1:
+                    imageButton.setImageResource(R.drawable.icone_vassoura);
+                    break;
+                case 2:
+                    imageButton.setImageResource(R.drawable.icone_cachorro);
+                    break;
+                case 3:
+                    imageButton.setImageResource(R.drawable.icone_parede_de_tijolos);
+                    break;
+                case 4:
+                    imageButton.setImageResource(R.drawable.icone_engenharia);
+                    break;
+                case 5:
+                    imageButton.setImageResource(R.drawable.icone_encanamento);
+                    break;
+                case 6:
+                    imageButton.setImageResource(R.drawable.icone_relampago);
+                    break;
+            }
+            switch (numeros[1]){
+                case 1:
+                    imageButton2.setImageResource(R.drawable.icone_vassoura);
+                    break;
+                case 2:
+                    imageButton2.setImageResource(R.drawable.icone_cachorro);
+                    break;
+                case 3:
+                    imageButton2.setImageResource(R.drawable.icone_parede_de_tijolos);
+                    break;
+                case 4:
+                    imageButton.setImageResource(R.drawable.icone_engenharia);
+                    break;
+                case 5:
+                    imageButton.setImageResource(R.drawable.icone_encanamento);
+                    break;
+                case 6:
+                    imageButton2.setImageResource(R.drawable.icone_relampago);
+                    break;
+            }
+            switch (numeros[2]){
+                case 1:
+                    imageButton3.setImageResource(R.drawable.icone_vassoura);
+                    break;
+                case 2:
+                    imageButton3.setImageResource(R.drawable.icone_cachorro);
+                    break;
+                case 3:
+                    imageButton3.setImageResource(R.drawable.icone_parede_de_tijolos);
+                    break;
+                case 4:
+                    imageButton.setImageResource(R.drawable.icone_engenharia);
+                    break;
+                case 5:
+                    imageButton.setImageResource(R.drawable.icone_encanamento);
+                    break;
+                case 6:
+                    imageButton3.setImageResource(R.drawable.icone_relampago);
+                    break;
+            }
+        }
+        else{
+            Toast.makeText(this, "Erro ao carregar filtros de serviços", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public boolean verficarPermissoes(){

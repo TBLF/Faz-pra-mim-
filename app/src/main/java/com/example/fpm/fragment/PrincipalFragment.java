@@ -2,6 +2,7 @@ package com.example.fpm.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,10 +48,10 @@ public class PrincipalFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private List<Prestador> lista;
     private DatabaseReference reference,refImg;
-    public static int numeros[] = new int[3];
-    public static ImageButton imageButton,imageButton2,imageButton3;
-    private ImageButton btn_irTelaServic,cancel;
+    private ImageButton cancel;
     private AdapterPesquisa adapterPesquisa;
+    private  RecyclerView recyclerView;
+    private SearchView searchView;
 
 
     // TODO: Rename and change types of parameters
@@ -94,45 +95,22 @@ public class PrincipalFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_principal, container, false);
         //Configurando mecanismo de pesquisa
-        SearchView searchView = v.findViewById(R.id.searchViewPesquisa);
-        RecyclerView recyclerView = v.findViewById(R.id.recyclerPesquisa);
+        searchView = v.findViewById(R.id.searchViewPesquisa);
+        recyclerView = v.findViewById(R.id.recyclerPesquisa);
         lista = new ArrayList<Prestador>();
         adapterPesquisa = new AdapterPesquisa(lista,getActivity());;
 
         //Referenciando banco de dados
         reference = ConfiguracaoFirebase.getFirebaseDatabase().child("Prestador");
-        refImg = ConfiguracaoFirebase.getFirebaseDatabase().child("Contratante").child(UsuarioFireBase.getUsuarioAtual().getUid().toString()).child("Interface Servico");
+
 
         //Referenciando objetos
-        btn_irTelaServic = v.findViewById(R.id.btn_irTelaServicos);
         constraintLayout= v.findViewById(R.id.bloco_de_dados);
         constraintLayout.setVisibility(View.INVISIBLE);
         button = v.findViewById(R.id.btn_negociar);
         cancel = v.findViewById(R.id.cancel);
-        imageButton3 = v.findViewById(R.id.image_button_cao);
-        imageButton2 = v.findViewById(R.id.image_button_vassoura);
-        imageButton= v.findViewById(R.id.image_button_tijolos);
+        textNome = v.findViewById(R.id.textNome);
 
-
-        refImg.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    int n,cont=0;
-                    for (DataSnapshot d : snapshot.getChildren()) {
-                        n = Integer.parseInt(d.child("numero").getValue().toString());
-                        numeros[cont] = n;
-                        cont++;
-                    }
-                    carregarImagens();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -158,15 +136,6 @@ public class PrincipalFragment extends Fragment {
             }
         });
 
-        btn_irTelaServic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(),ServicosActivity.class);
-                startActivity(i);
-
-            }
-        });
-
         return v;
     }
 
@@ -182,11 +151,16 @@ public class PrincipalFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     lista.clear();
                     for(DataSnapshot ds : snapshot.getChildren()){
-                        lista.add(ds.getValue(Prestador.class));
+                        String nome, end;
+                        nome = ds.child("Nome").getValue().toString();
+                        end = ds.child("Endereco").getValue().toString();
+
+                        lista.add(new Prestador(end,nome));
                     }
+                    Toast.makeText(getActivity(), "aqui", Toast.LENGTH_SHORT).show();
                     adapterPesquisa.notifyDataSetChanged();
                     int total = lista.size();
-                    Toast.makeText(getContext(), String.valueOf(total) , Toast.LENGTH_SHORT).show();
+
                 }
 
                 @Override
@@ -197,73 +171,7 @@ public class PrincipalFragment extends Fragment {
         }
     }
 
-    private  void carregarImagens(){
-        if(numeros.length<4){
-            switch (numeros[0]){
-                case 1:
-                    imageButton.setImageResource(R.drawable.icone_vassoura);
-                    break;
-                case 2:
-                    imageButton.setImageResource(R.drawable.icone_cachorro);
-                    break;
-                case 3:
-                    imageButton.setImageResource(R.drawable.icone_parede_de_tijolos);
-                    break;
-                case 4:
-                    imageButton.setImageResource(R.drawable.icone_engenharia);
-                    break;
-                case 5:
-                    imageButton.setImageResource(R.drawable.icone_encanamento);
-                    break;
-                case 6:
-                    imageButton.setImageResource(R.drawable.icone_relampago);
-                    break;
-            }
-            switch (numeros[1]){
-                case 1:
-                    imageButton2.setImageResource(R.drawable.icone_vassoura);
-                    break;
-                case 2:
-                    imageButton2.setImageResource(R.drawable.icone_cachorro);
-                    break;
-                case 3:
-                    imageButton2.setImageResource(R.drawable.icone_parede_de_tijolos);
-                    break;
-                case 4:
-                    imageButton.setImageResource(R.drawable.icone_engenharia);
-                    break;
-                case 5:
-                    imageButton.setImageResource(R.drawable.icone_encanamento);
-                    break;
-                case 6:
-                    imageButton2.setImageResource(R.drawable.icone_relampago);
-                    break;
-            }
-            switch (numeros[2]){
-                case 1:
-                    imageButton3.setImageResource(R.drawable.icone_vassoura);
-                    break;
-                case 2:
-                    imageButton3.setImageResource(R.drawable.icone_cachorro);
-                    break;
-                case 3:
-                    imageButton3.setImageResource(R.drawable.icone_parede_de_tijolos);
-                    break;
-                case 4:
-                    imageButton.setImageResource(R.drawable.icone_engenharia);
-                    break;
-                case 5:
-                    imageButton.setImageResource(R.drawable.icone_encanamento);
-                    break;
-                case 6:
-                    imageButton3.setImageResource(R.drawable.icone_relampago);
-                    break;
-            }
-        }
-        else{
-            Toast.makeText(getContext(), "Erro ao carregar", Toast.LENGTH_SHORT).show();
-        }
-    }
+
 
 
 }

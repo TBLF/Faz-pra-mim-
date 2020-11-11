@@ -4,10 +4,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.ScrollView;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.fpm.R;
+import com.example.fpm.adapter.AdapterPesquisa;
+import com.example.fpm.adapter.ListPrestadorAdapter;
+import com.example.fpm.moldes.Prestador;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +28,11 @@ public class AnteriorFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private List<Prestador> prestadorItem;
+    private ListView listPrestador;
+    private ListPrestadorAdapter adapter;
+    public static ScrollView scrollView;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -60,7 +73,19 @@ public class AnteriorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_anterior, container, false);
+        View v =inflater.inflate(R.layout.fragment_anterior, container, false);
+        listPrestador = v.findViewById(R.id.list_prestador);
+        scrollView = v.findViewById(R.id.scroll_view);
+
+        prestadorItem = new ArrayList<Prestador>();
+
+        //configurando listadapter de histórico do usuário
+        prestadorItem.add(new Prestador("Tiago Brasil Lima", "23/12/2020", R.drawable.imagem_fotouser));
+        prestadorItem.add(new Prestador("Lúcia Pires", "25/03/2020", R.drawable.imagem_fotouser));
+        prestadorItem.add(new Prestador("Adriano", "30/109/2020", R.drawable.imagem_fotouser));
+        adapter = new ListPrestadorAdapter(prestadorItem, getActivity());
+        listPrestador.setAdapter(adapter);
+        return v;
     }
 
 
