@@ -230,11 +230,16 @@ public class PrincipalFragment extends Fragment{
         btn_ir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textCont.setText(String.valueOf(cont[0])+"/"+String.valueOf(total));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lista.get(cont[0]).getLatLngPrestador(),12));
-                cont[0]++;
+                if(cont[0]!=total){
+                    textCont.setText(String.valueOf(cont[0])+"/"+String.valueOf(total));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lista.get(cont[0]).getLatLngPrestador(),12));
+                    cont[0]++;
+                }
+
             }
         });
+
+
     }
 
 

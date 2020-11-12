@@ -174,6 +174,12 @@ public class HomeActivity extends FragmentActivity implements
             menuItem.setChecked(true);
             f = 0;
 
+        }else if (f == 3) {
+            fragmentTransaction.replace(R.id.view_pager, new AnteriorFragment()).commit();
+            menuItem = menu.getItem(2);
+            menuItem.setChecked(true);
+            f = 0;
+
         } else {
             fragmentTransaction.replace(R.id.view_pager, new PrincipalFragment()).commit();
         }
