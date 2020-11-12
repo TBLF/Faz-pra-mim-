@@ -26,9 +26,10 @@ public class Prestador {
         this.uid = uid;
         this.nome = nome;
     }
-    public Prestador(String endereco,String nome) {
+    public Prestador(String endereco,String nome,LatLng latLngPrestador) {
         this.endereco = endereco;
         this.nome = nome;
+        this.latLngPrestador = latLngPrestador;
     }
 
     public Prestador() {

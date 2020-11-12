@@ -10,7 +10,6 @@ import android.widget.ScrollView;
 import androidx.fragment.app.Fragment;
 
 import com.example.fpm.R;
-import com.example.fpm.adapter.AdapterPesquisa;
 import com.example.fpm.adapter.ListPrestadorAdapter;
 import com.example.fpm.moldes.Prestador;
 

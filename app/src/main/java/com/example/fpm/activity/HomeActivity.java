@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,7 +59,7 @@ public class HomeActivity extends FragmentActivity implements
         GoogleMap.OnMarkerClickListener,
         OnMapReadyCallback {
     public static int f;
-    private GoogleMap mMap;
+    public static GoogleMap mMap;
     private List<Prestador> prestadorLatLngId;
     public static String UidPrestador;
     public static String NomePrestador;
@@ -67,7 +68,6 @@ public class HomeActivity extends FragmentActivity implements
     private String[] appPermissions = null;
     private static final int CODIGO_PERMISSOES_REQUERIDAS = 1;
     private ImageButton imageButton,imageButton2,imageButton3,btn_irTelaServic,cancel;
-    private LinearLayout linearButtons;
 
 
     @Override
@@ -127,7 +127,6 @@ public class HomeActivity extends FragmentActivity implements
         imageButton2 = findViewById(R.id.image_button_vassoura);
         imageButton= findViewById(R.id.image_button_tijolos);
         btn_irTelaServic = findViewById(R.id.btn_irTelaServicos);
-        linearButtons = findViewById(R.id.linearButtons);
 
         //atribuindo permissões a um array
         appPermissions = new String[]{
@@ -255,6 +254,11 @@ public class HomeActivity extends FragmentActivity implements
 
     }
 
+    public static GoogleMap getmMap() {
+        mMap.clear();
+        return mMap;
+    }
+
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
@@ -309,6 +313,7 @@ public class HomeActivity extends FragmentActivity implements
 
     private boolean recuperarLocalizacoes(int num) {
         prestadorLatLngId.clear();
+
         DatabaseReference prestadorplaceDatabse = ConfiguracaoFirebase.getFirebaseDatabase().child("Prestador");
         final boolean[] cond = {false};
         prestadorplaceDatabse.addValueEventListener(new ValueEventListener() {
@@ -316,7 +321,7 @@ public class HomeActivity extends FragmentActivity implements
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     LatLng newPosition = null;
-
+                    float cor;
                     if (num == 0) {
                         for (DataSnapshot d : snapshot.getChildren()) {
                             String nome = d.child("Nome").getValue().toString();
@@ -346,56 +351,33 @@ public class HomeActivity extends FragmentActivity implements
 
                                 switch (num){
                                     case 1:
-                                        mMap.addMarker(
-                                                new MarkerOptions()
-                                                        .position(newPosition)
-                                                        .title(nome)
-                                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                                        );
+                                        cor = 30.0f;
                                         break;
                                     case 2:
-                                        mMap.addMarker(
-                                                new MarkerOptions()
-                                                        .position(newPosition)
-                                                        .title(nome)
-                                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN))
-                                        );
+                                        cor = 180.0f;
                                         break;
                                     case 3:
-                                        mMap.addMarker(
-                                                new MarkerOptions()
-                                                        .position(newPosition)
-                                                        .title(nome)
-                                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
-                                        );
+                                        cor = 300.0f;
                                         break;
                                     case 4:
-                                        mMap.addMarker(
-                                                new MarkerOptions()
-                                                        .position(newPosition)
-                                                        .title(nome)
-                                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)
-                                        ));
+                                        cor = 210.0f;
                                         break;
                                     case 5:
-                                        mMap.addMarker(
-                                                new MarkerOptions()
-                                                        .position(newPosition)
-                                                        .title(nome)
-                                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                                        );
+                                        cor = 240.0f;
                                         break;
                                     case 6:
-                                        mMap.addMarker(
-                                                new MarkerOptions()
-                                                        .position(newPosition)
-                                                        .title(nome)
-                                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-                                        );
+                                        cor = 60.0f;
                                         break;
 
+                                    default:
+                                        throw new IllegalStateException("Unexpected value: " + num);
                                 }
-
+                                mMap.addMarker(
+                                        new MarkerOptions()
+                                                .position(newPosition)
+                                                .title(nome)
+                                                .icon(BitmapDescriptorFactory.defaultMarker(cor))
+                                );
                                 prestadorLatLngId.add(new Prestador(newPosition, uId, nome));
 
                             }

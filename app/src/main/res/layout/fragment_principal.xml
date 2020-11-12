@@ -35,29 +35,16 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:padding="5dp">
+                android:padding="5dp"
+                android:background="@drawable/forma_segundoplano3"
+                android:elevation="5dp">
 
                 <SearchView
                     android:id="@+id/searchViewPesquisa"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/forma_segundoplano3"
-                    android:elevation="5dp"/>
+                    android:layout_height="50dp" />
 
             </androidx.cardview.widget.CardView>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerPesquisa"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="15dp"
-                android:visibility="visible"/>
-
-
         </LinearLayout>
     </FrameLayout>
 
@@ -183,6 +170,26 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imageProx"
+        android:layout_width="49dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="354dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/icone_ir"
+        app:layout_constraintBottom_toTopOf="@+id/bloco_de_dados"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textQuant"
+        android:layout_width="58dp"
+        android:layout_height="39dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageProx"
+        app:layout_constraintEnd_toStartOf="@+id/imageProx"
+        app:layout_constraintTop_toTopOf="@+id/imageProx" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
