@@ -295,10 +295,10 @@ public class ServicosActivity extends AppCompatActivity {
                     i_button1.setImageResource(R.drawable.icone_parede_de_tijolos);
                     break;
                 case 4:
-                    i_button3.setImageResource(R.drawable.icone_engenharia);
+                    i_button1.setImageResource(R.drawable.icone_engenharia);
                     break;
                 case 5:
-                    i_button3.setImageResource(R.drawable.icone_encanamento);
+                    i_button1.setImageResource(R.drawable.icone_encanamento);
                     break;
                 case 6:
                     i_button1.setImageResource(R.drawable.icone_relampago);
@@ -315,10 +315,10 @@ public class ServicosActivity extends AppCompatActivity {
                     i_button2.setImageResource(R.drawable.icone_parede_de_tijolos);
                     break;
                 case 4:
-                    i_button3.setImageResource(R.drawable.icone_engenharia);
+                    i_button2.setImageResource(R.drawable.icone_engenharia);
                     break;
                 case 5:
-                    i_button3.setImageResource(R.drawable.icone_encanamento);
+                    i_button2.setImageResource(R.drawable.icone_encanamento);
                     break;
                 case 6:
                     i_button2.setImageResource(R.drawable.icone_relampago);

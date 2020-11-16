@@ -45,7 +45,7 @@ import static com.example.fpm.activity.HomeActivity.f;
 
 public class EditarPerfilActivity extends AppCompatActivity {
 
-    private EditText nomeView,idadeView,enderecoView;
+    private EditText nomeView,enderecoView;
     private MaskEditText telefoneView;
     private CircleImageView imagemCircle;
     private Usuario usuarios = new Usuario();
@@ -63,7 +63,6 @@ public class EditarPerfilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_perfil);
         nomeView = findViewById(R.id.editNome);
-        idadeView = findViewById(R.id.editData);
         telefoneView = findViewById(R.id.editFone);
         enderecoView = findViewById(R.id.editEnd);
         imagemCircle = findViewById(R.id.circle_perfil);
@@ -180,16 +179,6 @@ public class EditarPerfilActivity extends AppCompatActivity {
             }
         }
 
-        if(!idadeView.getText().toString().isEmpty()){
-            if(Integer.parseInt(idadeView.getText().toString())<0 || Integer.parseInt(idadeView.getText().toString())>120){
-                Toast.makeText(this, "Insira uma idade adequada.", Toast.LENGTH_SHORT).show();
-            } else if(Integer.parseInt(idadeView.getText().toString())<16){
-                Toast.makeText(this, "Você deve ter no mínimo 16 anos.", Toast.LENGTH_SHORT).show();
-            }else{
-                ref.child(id).setValue(usuarios.getIdade());
-            }
-        }
-
         if(!enderecoView.getText().toString().isEmpty()){
             ref.child(id).setValue(usuarios.getEndereco());
         }
@@ -198,7 +187,6 @@ public class EditarPerfilActivity extends AppCompatActivity {
     public void cadastrarClasse () {
         if(!nomeView.getText().toString().isEmpty()) usuarios.setNome(nomeView.getText().toString());
         if(!telefoneView.getText().toString().isEmpty())usuarios.setTelefone(telefoneView.getText().toString());
-        if(!idadeView.getText().toString().isEmpty())usuarios.setIdade(Integer.parseInt(idadeView.getText().toString()));
         if(!enderecoView.getText().toString().isEmpty())usuarios.setEndereco(enderecoView.getText().toString());
     }
 

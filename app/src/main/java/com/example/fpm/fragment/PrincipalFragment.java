@@ -103,6 +103,7 @@ public class PrincipalFragment extends Fragment{
         //Configurando mecanismo de pesquisa
         searchView = v.findViewById(R.id.searchViewPesquisa);
         lista = new ArrayList<Prestador>();
+        textNome = v.findViewById(R.id.textNome);
         //Referenciando banco de dados
         reference = ConfiguracaoFirebase.getFirebaseDatabase().child("Prestador");
 

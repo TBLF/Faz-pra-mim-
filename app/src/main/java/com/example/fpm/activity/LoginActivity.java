@@ -49,18 +49,18 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(HomeActivity);
                     }else{
 
-                     String excecao ="";
+                        String excecao ="";
 
-                     try{
-                         throw task.getException();
-                     }catch (FirebaseAuthInvalidUserException e){
-                         excecao = "Usuário não está cadastrado.";
-                     }catch (FirebaseAuthInvalidCredentialsException e){
-                         excecao = "Email ou senha não correspondem ao usuário cadastrado.";
-                     } catch (Exception e) {
-                         excecao = "Erro ao autenticar usuário.";
-                         e.printStackTrace();
-                     }
+                        try{
+                            throw task.getException();
+                        }catch (FirebaseAuthInvalidUserException e){
+                            excecao = "Usuário não está cadastrado.";
+                        }catch (FirebaseAuthInvalidCredentialsException e){
+                            excecao = "Email ou senha não correspondem ao usuário cadastrado.";
+                        } catch (Exception e) {
+                            excecao = "Erro ao autenticar usuário.";
+                            e.printStackTrace();
+                        }
                         Toast.makeText(LoginActivity.this, excecao, Toast.LENGTH_SHORT).show();
                     }
                 }

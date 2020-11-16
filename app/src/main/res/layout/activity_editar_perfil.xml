@@ -8,182 +8,178 @@
     android:orientation="vertical"
     tools:context=".activity.EditarPerfilActivity">
 
-    <include layout="@layout/toolbar"/>
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circle_perfil"
-        android:layout_width="137dp"
-        android:layout_height="130dp"
-        android:layout_marginVertical="30dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginRight="100dp"
-        android:layout_marginBottom="500dp"
-        android:layout_weight="2"
-        android:src="@drawable/imagem_fotouser"
-        android:background="@color/primeirofundopreto"
-        app:civ_border_color="@color/primeirofundopreto"
-        app:civ_border_width="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.086" />
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/editNomeLayout"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="400dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:startIconDrawable="@drawable/icone_nome_prancheta"
-        android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editNome"
-            android:layout_width="350dp"
-            android:layout_height="45dp"
-            android:ems="10"
-            android:hint="nome"
-            android:inputType="textPersonName"
-            android:padding="5dp"
-            android:textColor="@color/color_text"
-            android:textColorHint="@color/color_hint"
-         />
-    </com.google.android.material.textfield.TextInputLayout>
+                        <include
+                            android:id="@+id/include"
+                            layout="@layout/toolbar" />
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editDataLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editNomeLayout"
-        app:layout_constraintStart_toStartOf="@+id/editNomeLayout"
-        android:layout_marginBottom="330dp"
-        app:startIconDrawable="@drawable/icone_bolo"
-        android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editData"
-            android:layout_width="350dp"
-            android:layout_height="45dp"
-            android:ems="10"
-            android:inputType="number"
-            android:padding="5dp"
-            android:textColor="@color/color_text"
-            android:hint="idade"
-            android:textColorHint="@color/color_hint" />
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/circle_perfil"
+                                android:layout_width="137dp"
+                                android:layout_height="130dp"
+                                android:layout_marginVertical="30dp"
+                                android:layout_marginStart="100dp"
+                                android:layout_marginLeft="100dp"
+                                android:layout_marginTop="32dp"
+                                android:layout_marginEnd="100dp"
+                                android:layout_marginRight="100dp"
+                                android:layout_marginBottom="500dp"
+                                android:layout_weight="2"
+                                android:src="@drawable/imagem_fotouser"
+                                android:background="@color/primeirofundopreto"
+                                app:civ_border_color="@color/primeirofundopreto"
+                                app:civ_border_width="2dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.086" />
 
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/editNomeLayout"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="32dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="400dp"
+                                android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/btn_galeria"
+                                app:startIconDrawable="@drawable/icone_nome_prancheta">
 
-</com.google.android.material.textfield.TextInputLayout>
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editNome"
+                                    android:layout_width="350dp"
+                                    android:layout_height="45dp"
+                                    android:ems="10"
+                                    android:hint="nome"
+                                    android:inputType="textPersonName"
+                                    android:padding="5dp"
+                                    android:textColor="@color/color_text"
+                                    android:textColorHint="@color/color_hint" />
+                            </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/editFoneLayout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editDataLayout"
-        app:layout_constraintStart_toStartOf="@+id/editData"
-        android:layout_marginBottom="260dp"
-        app:startIconDrawable="@drawable/icone_phone"
-        android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        >
-        <com.santalu.maskara.widget.MaskEditText
-            android:id="@+id/editFone"
-            android:layout_width="350dp"
-            android:layout_height="45dp"
-            android:ems="10"
-            android:inputType="date"
-            android:padding="5dp"
-            android:textColor="@color/color_text"
-            android:hint="numero de telefone"
-            android:textColorHint="@color/color_hint"
-            app:mask="+55 (__) _____ ____"
-            app:maskCharacter="_"
-            app:maskStyle="completable"
-            />
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/editFoneLayout"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="260dp"
+                                android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="@+id/editNomeLayout"
+                                app:layout_constraintStart_toStartOf="@+id/editNomeLayout"
+                                app:layout_constraintTop_toBottomOf="@+id/editNomeLayout"
+                                app:startIconDrawable="@drawable/icone_phone">
 
-    </com.google.android.material.textfield.TextInputLayout>
+                                <com.santalu.maskara.widget.MaskEditText
+                                    android:id="@+id/editFone"
+                                    android:layout_width="350dp"
+                                    android:layout_height="45dp"
+                                    android:ems="10"
+                                    android:hint="numero de telefone"
+                                    android:inputType="date"
+                                    android:padding="5dp"
+                                    android:textColor="@color/color_text"
+                                    android:textColorHint="@color/color_hint"
+                                    app:mask="+55 (__) _____ ____"
+                                    app:maskCharacter="_"
+                                    app:maskStyle="completable" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/editEndLayout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editFoneLayout"
-        app:layout_constraintStart_toStartOf="@+id/editFoneLayout"
-        android:layout_marginBottom="190dp"
-        app:startIconDrawable="@drawable/icone_localizacao"
-        android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        >
+                            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editEnd"
-            android:layout_width="350dp"
-            android:layout_height="45dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:padding="5dp"
-            android:textColor="@color/color_text"
-            android:hint="endereço"
-            android:textColorHint="@color/color_hint" />
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/editEndLayout"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginBottom="190dp"
+                                android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="@+id/editFoneLayout"
+                                app:layout_constraintStart_toStartOf="@+id/editFoneLayout"
+                                app:layout_constraintTop_toBottomOf="@+id/editFoneLayout"
+                                app:startIconDrawable="@drawable/icone_localizacao">
 
-    </com.google.android.material.textfield.TextInputLayout>
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editEnd"
+                                    android:layout_width="350dp"
+                                    android:layout_height="45dp"
+                                    android:ems="10"
+                                    android:hint="endereço"
+                                    android:inputType="textPersonName"
+                                    android:padding="5dp"
+                                    android:textColor="@color/color_text"
+                                    android:textColorHint="@color/color_hint" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
 
 
+                            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                android:id="@+id/floatingActionButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="300dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginBottom="40dp"
+                                android:clickable="true"
+                                android:onClick="Salvar"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.327"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/editEndLayout"
+                                app:srcCompat="@drawable/icone_save"
+                                tools:ignore="VectorDrawableCompat" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="300dp"
-        android:layout_marginLeft="300dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="40dp"
-        android:clickable="true"
-        android:onClick="Salvar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.327"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/icone_save"
-        tools:ignore="VectorDrawableCompat" />
+                            <ImageButton
+                                android:id="@+id/btn_camera"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintBottom_toBottomOf="@+id/btn_galeria"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.407"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/btn_galeria"
+                                app:layout_constraintVertical_bias="0.0"
+                                android:src="@drawable/icone_camera" />
 
-    <ImageButton
-        android:id="@+id/btn_camera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_galeria"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.407"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btn_galeria"
-        app:layout_constraintVertical_bias="0.0"
-        android:src="@drawable/icone_camera" />
+                            <ImageButton
+                                android:id="@+id/btn_galeria"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="148dp"
+                                android:layout_marginBottom="472dp"
+                                android:src="@drawable/icone_galeria"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/btn_camera"
+                                app:layout_constraintTop_toBottomOf="@+id/circle_perfil" />
 
-    <ImageButton
-        android:id="@+id/btn_galeria"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="148dp"
-        android:layout_marginRight="148dp"
-        android:layout_marginBottom="472dp"
-        android:src="@drawable/icone_galeria"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

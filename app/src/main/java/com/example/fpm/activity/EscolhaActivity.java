@@ -33,10 +33,9 @@ public class EscolhaActivity extends AppCompatActivity {
         startActivity(i);
     }
     public void startcadastro_prestadorActivity (View view) {
-        boolean v = true;
-            final Intent cadastro_prestadorActivity = new Intent(this, CadastroActivity2.class);
+            final Intent cadastro_prestadorActivity = new Intent(this, CadastroPrestadorActivity.class);
             startActivity(cadastro_prestadorActivity);
-        }
+    }
 
 
 }

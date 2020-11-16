@@ -16,10 +16,13 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.FPM">
+        <activity android:name=".activity.CadastroPrestadorServicoActivity"></activity>
+        <activity android:name=".activity.CadastroPrestadorActivity2" />
+        <activity android:name=".activity.CadastroPrestadorActivity" />
         <activity
             android:name=".activity.ServicosActivity"
             android:label="@string/title_activity_servicos"
-            android:theme="@style/Theme.FPM.NoActionBar"></activity>
+            android:theme="@style/Theme.FPM.NoActionBar" />
         <activity
             android:name=".activity.NegociarActivity"
             android:label="@string/title_activity_negociar"

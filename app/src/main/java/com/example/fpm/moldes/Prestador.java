@@ -12,6 +12,12 @@ public class Prestador {
     private String uid;
     private String Tipo;
     private String endereco;
+    private double latatual;
+    private double longatual;
+    private String email;
+    private String senha;
+    private String telefone;
+    private int idade;
 
 
 
@@ -51,12 +57,44 @@ public class Prestador {
         this.nomePesquisa = nomePesquisa;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
     public String getNome() {
         return nome;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public int getIdade() {
+        return idade;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
     }
 
     public String getData_servico() {
@@ -97,5 +135,21 @@ public class Prestador {
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+
+    public double getLatatual() {
+        return latatual;
+    }
+
+    public void setLatatual(double latatual) {
+        this.latatual = latatual;
+    }
+
+    public double getLongatual() {
+        return longatual;
+    }
+
+    public void setLongatual(double longatual) {
+        this.longatual = longatual;
     }
 }

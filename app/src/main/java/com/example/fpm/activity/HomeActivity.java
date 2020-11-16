@@ -67,7 +67,7 @@ public class HomeActivity extends FragmentActivity implements
     private Switch aSwitch;
     private String[] appPermissions = null;
     private static final int CODIGO_PERMISSOES_REQUERIDAS = 1;
-    private ImageButton imageButton,imageButton2,imageButton3,btn_irTelaServic,cancel;
+    private ImageButton imageButton, imageButton2, imageButton3, btn_irTelaServic, cancel;
 
 
     @Override
@@ -107,10 +107,10 @@ public class HomeActivity extends FragmentActivity implements
                 recuperarLocalizacoes(numeros[2]);
             }
         });
-          btn_irTelaServic.setOnClickListener(new View.OnClickListener() {
+        btn_irTelaServic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(HomeActivity.this,ServicosActivity.class);
+                Intent i = new Intent(HomeActivity.this, ServicosActivity.class);
                 startActivity(i);
 
             }
@@ -125,7 +125,7 @@ public class HomeActivity extends FragmentActivity implements
         prestadorLatLngId = new ArrayList<Prestador>();
         imageButton3 = findViewById(R.id.image_button_cao);
         imageButton2 = findViewById(R.id.image_button_vassoura);
-        imageButton= findViewById(R.id.image_button_tijolos);
+        imageButton = findViewById(R.id.image_button_tijolos);
         btn_irTelaServic = findViewById(R.id.btn_irTelaServicos);
 
         //atribuindo permissões a um array
@@ -134,14 +134,14 @@ public class HomeActivity extends FragmentActivity implements
                 Manifest.permission.READ_EXTERNAL_STORAGE
         };
         //reniciando variavel de verificação de imagem
-        u=true;
+        u = true;
 
         //carregando posição dos botões
         refImg.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    int n,cont=0;
+                if (snapshot.exists()) {
+                    int n, cont = 0;
                     for (DataSnapshot d : snapshot.getChildren()) {
                         n = Integer.parseInt(d.child("numero").getValue().toString());
                         numeros[cont] = n;
@@ -174,7 +174,7 @@ public class HomeActivity extends FragmentActivity implements
             menuItem.setChecked(true);
             f = 0;
 
-        }else if (f == 3) {
+        } else if (f == 3) {
             fragmentTransaction.replace(R.id.view_pager, new AnteriorFragment()).commit();
             menuItem = menu.getItem(2);
             menuItem.setChecked(true);
@@ -235,22 +235,22 @@ public class HomeActivity extends FragmentActivity implements
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this);
         LatLng manaus = new LatLng(-3.0895571, -59.9644187);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(manaus,12));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(manaus, 12));
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(HomeActivity.this, R.raw.style_json3));
-        if(verficarPermissoes()) {
+        if (verficarPermissoes()) {
             recuperarLocalizacaoUsuario();
             recuperarLocalizacoes(0);
-        }else{
+        } else {
             Toast.makeText(this, "Nem todas as permissões estão ativas", Toast.LENGTH_SHORT).show();
             finish();
         }
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked==true){
+                if (isChecked == true) {
                     googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(HomeActivity.this, R.raw.style_json4));
                     aSwitch.setTextColor(getResources().getColor(R.color.black));
-                }else{
+                } else {
                     googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(HomeActivity.this, R.raw.style_json3));
                     aSwitch.setTextColor(getResources().getColor(R.color.white));
 
@@ -285,7 +285,7 @@ public class HomeActivity extends FragmentActivity implements
         }
 
 
-      for (int ij = 0; ij < prestadorLatLngId.size(); ij++) {
+        for (int ij = 0; ij < prestadorLatLngId.size(); ij++) {
             if (prestadorLatLngId.get(ij).getLatLngPrestador().equals(marker.getPosition())) {
                 uid = prestadorLatLngId.get(ij).getUid();
                 nome = prestadorLatLngId.get(ij).getNome();
@@ -355,7 +355,7 @@ public class HomeActivity extends FragmentActivity implements
                                 double longitude = (double) d.child("LongAtual").getValue();
                                 newPosition = new LatLng(lat, longitude);
 
-                                switch (num){
+                                switch (num) {
                                     case 1:
                                         cor = 30.0f;
                                         break;
@@ -401,9 +401,10 @@ public class HomeActivity extends FragmentActivity implements
         });
         return cond[0];
     }
-    private  void carregarImagens(){
-        if(numeros.length<4){
-            switch (numeros[0]){
+
+    private void carregarImagens() {
+        if (numeros.length < 4) {
+            switch (numeros[0]) {
                 case 1:
                     imageButton.setImageResource(R.drawable.icone_vassoura);
                     break;
@@ -423,7 +424,7 @@ public class HomeActivity extends FragmentActivity implements
                     imageButton.setImageResource(R.drawable.icone_relampago);
                     break;
             }
-            switch (numeros[1]){
+            switch (numeros[1]) {
                 case 1:
                     imageButton2.setImageResource(R.drawable.icone_vassoura);
                     break;
@@ -443,7 +444,7 @@ public class HomeActivity extends FragmentActivity implements
                     imageButton2.setImageResource(R.drawable.icone_relampago);
                     break;
             }
-            switch (numeros[2]){
+            switch (numeros[2]) {
                 case 1:
                     imageButton3.setImageResource(R.drawable.icone_vassoura);
                     break;
@@ -463,21 +464,20 @@ public class HomeActivity extends FragmentActivity implements
                     imageButton3.setImageResource(R.drawable.icone_relampago);
                     break;
             }
-        }
-        else{
+        } else {
             Toast.makeText(this, "Erro ao carregar filtros de serviços", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public boolean verficarPermissoes(){
+    public boolean verficarPermissoes() {
         List<String> permissoesRequeridas = new ArrayList<>();
-        for(String permission : appPermissions){
-            if(ContextCompat.checkSelfPermission(this,permission)!=PackageManager.PERMISSION_GRANTED){
+        for (String permission : appPermissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
                 permissoesRequeridas.add(permission);
             }
         }
-        if(!permissoesRequeridas.isEmpty()){
-            ActivityCompat.requestPermissions(this,permissoesRequeridas.toArray(new String[permissoesRequeridas.size()]),CODIGO_PERMISSOES_REQUERIDAS);
+        if (!permissoesRequeridas.isEmpty()) {
+            ActivityCompat.requestPermissions(this, permissoesRequeridas.toArray(new String[permissoesRequeridas.size()]), CODIGO_PERMISSOES_REQUERIDAS);
             return false;
         }
 

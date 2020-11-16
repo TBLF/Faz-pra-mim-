@@ -10,131 +10,155 @@
 
     >
 
-
-  <ImageView
-      android:id="@+id/imageView2"
-      android:layout_width="200dp"
-      android:layout_height="200dp"
-      android:layout_marginStart="32dp"
-      android:layout_marginLeft="32dp"
-      android:layout_marginTop="8dp"
-      android:layout_marginEnd="32dp"
-      android:layout_marginRight="32dp"
-      android:src="@drawable/imagem_logo"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.496"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.112" />
-
-
-  <com.google.android.material.textfield.TextInputLayout
-      android:id="@+id/editEmailLayout"
-      android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
-      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="24dp"
-      android:layout_marginLeft="24dp"
-      android:layout_marginTop="150dp"
-      android:layout_marginEnd="24dp"
-      android:layout_marginRight="24dp"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.384"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.37"
-      app:startIconDrawable="@drawable/icone_mail"
-      >
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/editEmail"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
-        android:hint="conta de email"
-        android:inputType="textEmailAddress"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:paddingRight="10dp"
-        android:textColor="#fff"
-        android:textColorHint="@color/cinza" />
-
-  </com.google.android.material.textfield.TextInputLayout>
-
-
-
-  <com.google.android.material.textfield.TextInputLayout
-      android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="@+id/editEmailLayout"
-      app:layout_constraintHorizontal_bias="1.0"
-      app:layout_constraintStart_toStartOf="@+id/editEmailLayout"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.47000003"
-      android:layout_marginTop="200dp"
-      android:textColorHint="@color/cinza"
-      app:endIconMode="password_toggle"
-      app:endIconTint="@color/white"
-      app:passwordToggleTint="@color/white"
-      app:startIconDrawable="@drawable/icone_chave"
-      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-      >
-  <com.google.android.material.textfield.TextInputEditText
-
-      android:id="@+id/editSenha"
+  <ScrollView
       android:layout_width="match_parent"
-      android:layout_height="50dp"
-      android:autoText="false"
-      android:ems="10"
-      android:hint="senha"
-      android:inputType="textPassword"
-      android:padding="5dp"
-      android:paddingLeft="10dp"
-      android:paddingTop="5dp"
-      android:paddingRight="10dp"
-      android:textColor="@color/white"
-      android:textColorHint="@color/cinza"
-       />
-  </com.google.android.material.textfield.TextInputLayout>
-
-  <Button
-      android:id="@+id/button"
-      android:onClick="startHomeActivity"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="32dp"
-      android:layout_marginLeft="32dp"
-      android:layout_marginEnd="32dp"
-      android:layout_marginRight="32dp"
-      android:layout_marginBottom="20dp"
-      android:text="Entrar"
-      android:backgroundTint="@color/colorPrimary"
-      android:textColor="#000000"
+      android:layout_height="match_parent"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.0"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.806" />
+      app:layout_constraintTop_toTopOf="parent">
 
-  <TextView
-      android:id="@+id/textView"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="8dp"
-      android:layout_marginBottom="85dp"
-      android:onClick="startCadastroActivity"
-      android:text="Cadastrar-se"
-      android:textColor="#ffffff"
-      android:textSize="20dp"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="@+id/button"
-      app:layout_constraintHorizontal_bias="0.521"
-      app:layout_constraintStart_toStartOf="@+id/button"
-      app:layout_constraintTop_toBottomOf="@+id/button" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="64dp"
+            android:src="@drawable/imagem_logo"
+            app:layout_constraintBottom_toTopOf="@+id/editEmailLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.8" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editEmailLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="8dp"
+            android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.384"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:startIconDrawable="@drawable/icone_mail">
+
+          <com.google.android.material.textfield.TextInputEditText
+              android:id="@+id/editEmail"
+              android:layout_width="350dp"
+              android:layout_height="50dp"
+              android:hint="conta de email"
+              android:inputType="textEmailAddress"
+              android:paddingLeft="10dp"
+              android:paddingTop="5dp"
+              android:paddingRight="10dp"
+              android:textColor="#fff"
+              android:textColorHint="@color/cinza" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout3"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:layout_marginBottom="256dp"
+            android:textColorHint="@color/cinza"
+            android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/editEmailLayout"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/editEmailLayout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:passwordToggleTint="@color/white"
+            app:startIconDrawable="@drawable/icone_chave">
+
+          <com.google.android.material.textfield.TextInputEditText
+
+              android:id="@+id/editSenha"
+              android:layout_width="match_parent"
+              android:layout_height="50dp"
+              android:autoText="false"
+              android:ems="10"
+              android:hint="senha"
+              android:inputType="textPassword"
+              android:padding="5dp"
+              android:paddingLeft="10dp"
+              android:paddingTop="5dp"
+              android:paddingRight="10dp"
+              android:textColor="@color/white"
+              android:textColorHint="@color/cinza" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="128dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:onClick="startHomeActivity"
+            android:text="Entrar"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="130dp"
+            android:layout_marginBottom="56dp"
+            android:onClick="startCadastroActivity"
+            android:text="Cadastrar-se"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button" />
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+  </ScrollView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,34 +13,35 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.fpm.R;
-
 import com.google.android.material.textfield.TextInputEditText;
 import com.santalu.maskara.widget.MaskEditText;
-import static com.example.fpm.activity.LoginActivity.u;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CadastroActivity extends AppCompatActivity {
-    public static TextInputEditText nome,datanasc,ender;
-    public static MaskEditText telefone;
+import static com.example.fpm.activity.LoginActivity.u;
+
+public class CadastroPrestadorActivity extends AppCompatActivity {
+    public static TextInputEditText nome2,datanasc2,ender2,desc;
+    public static MaskEditText telefone2;
     private ImageButton buttonVoltar,btnCamera,btnGaleria;
     private static final int SELECA0_CAMERA =100;
     private static final int SELECA0_GALERIA =200;
     private CircleImageView circleImageViewPerfil;
-    public static  Bitmap imagem ;
-
+    public static Bitmap imagem2 ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro);
+        setContentView(R.layout.activity_cadastro_prestador);
+
         Intent i = new Intent(this,EscolhaActivity.class);
 
-        imagem = null;
+        imagem2 = null;
         u=false;
-        nome= findViewById(R.id.editNome);
-        telefone=findViewById(R.id.editFone);
-        datanasc=findViewById(R.id.editData);
-        ender=findViewById(R.id.editEnd);
+        nome2= findViewById(R.id.editNome);
+        telefone2=findViewById(R.id.editFone);
+        datanasc2=findViewById(R.id.editData);
+        ender2=findViewById(R.id.editEnd);
+        desc =findViewById(R.id.editDes);
         btnCamera = findViewById(R.id.btnCamera);
         btnGaleria = findViewById(R.id.btnGaleria);
         buttonVoltar = findViewById(R.id.sair_toolbar);
@@ -73,13 +74,12 @@ public class CadastroActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
     public void starttela2Activity (View view) {
         boolean v = true;
         if (verificarCampos(v) == true) {
 
-            final Intent tela2Activity = new Intent(this, CadastroActivity2.class);
+            final Intent tela2Activity = new Intent(this, CadastroPrestadorServicoActivity.class);
             startActivity(tela2Activity);
         }
         else{
@@ -95,17 +95,17 @@ public class CadastroActivity extends AppCompatActivity {
             try{
                 switch (requestCode){
                     case SELECA0_CAMERA:
-                        imagem = (Bitmap)data.getExtras().get("data");
+                        imagem2 = (Bitmap)data.getExtras().get("data");
                         break;
                     case SELECA0_GALERIA:
                         Uri localImagem = data.getData();
-                        imagem = MediaStore.Images.Media.getBitmap(getContentResolver(),localImagem);
+                        imagem2 = MediaStore.Images.Media.getBitmap(getContentResolver(),localImagem);
                         break;
                 }
 
-                if(imagem!=null){
+                if(imagem2!=null){
                     u=true;
-                    circleImageViewPerfil.setImageBitmap(imagem);
+                    circleImageViewPerfil.setImageBitmap(imagem2);
                 }
             }catch (Exception e){
                 e.printStackTrace();
@@ -115,32 +115,34 @@ public class CadastroActivity extends AppCompatActivity {
 
     public boolean verificarCampos(boolean v){
         v=true;
-        if(nome.getText().toString().isEmpty()){
+        if(nome2.getText().toString().isEmpty()){
             v=false;
         }
-        if(telefone.getText().toString().isEmpty()){
+        if(telefone2.getText().toString().isEmpty()){
             v = false;
         }
-        else if(telefone.getUnMasked().toString().length()>11){
+        else if(telefone2.getUnMasked().toString().length()>11){
             Toast.makeText(this, "Número de telefone inválido.", Toast.LENGTH_SHORT).show();
             v=false;
         }
-        else if(telefone.getUnMasked().toString().length()<11){
+        else if(telefone2.getUnMasked().toString().length()<11){
             Toast.makeText(this, "Número de telefone inválido.", Toast.LENGTH_SHORT).show();
             v=false;
         }
-        if(datanasc.getText().toString().isEmpty()){
+        if(datanasc2.getText().toString().isEmpty()){
             v=false;
-        } else if(Integer.parseInt(datanasc.getText().toString())<0 || Integer.parseInt(datanasc.getText().toString())>120){
+        } else if(Integer.parseInt(datanasc2.getText().toString())<0 || Integer.parseInt(datanasc2.getText().toString())>120){
             Toast.makeText(this, "Insira uma idade adequada.", Toast.LENGTH_SHORT).show();
             v=false;
-        } else if(Integer.parseInt(datanasc.getText().toString())<16){
+        } else if(Integer.parseInt(datanasc2.getText().toString())<16){
             Toast.makeText(this, "Você deve ter no mínimo 16 anos.", Toast.LENGTH_SHORT).show();
             v=false;
         }
-
-        if(ender.getText().toString().isEmpty()){
+        if(ender2.getText().toString().isEmpty()){
             v=false;
+        }
+        if(desc.getText().toString().isEmpty()){
+            v =false;
         }
 
         return v;

@@ -8,187 +8,204 @@
     android:orientation="vertical"
     tools:context=".activity.CadastroActivity">
 
-        <include
-            android:id="@+id/include"
-            layout="@layout/toolbar" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imagePerfil"
-            android:layout_width="137dp"
-            android:layout_height="130dp"
-            android:layout_marginVertical="30dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="130dp"
-            android:layout_marginRight="130dp"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="2"
-            android:background="@color/primeirofundopreto"
-            android:src="@drawable/imagem_fotouser"
-            app:civ_border_color="@color/primeirofundopreto"
-            app:civ_border_width="2dp"
-            app:layout_constraintBottom_toTopOf="@+id/btnGaleria"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include" />
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editNomeLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnGaleria"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            app:startIconDrawable="@drawable/icone_nome_prancheta"
-            >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editNome"
-                    android:layout_width="350dp"
-                    android:layout_height="45dp"
-                    android:ems="10"
-                    android:hint="nome"
-                    android:inputType="textPersonName"
-                    android:padding="5dp"
-                    android:textColor="@color/color_text"
-                    android:textColorHint="@color/color_hint"
-                     />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-                android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:id="@+id/editDataLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="@+id/editNomeLayout"
-                app:layout_constraintStart_toStartOf="@+id/editNomeLayout"
-                app:layout_constraintTop_toBottomOf="@+id/editNomeLayout"
-                android:layout_marginTop="32dp"
-               app:startIconDrawable="@drawable/icone_bolo"
-
-
-        >
-        <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editData"
-                    android:layout_width="350dp"
-                    android:layout_height="45dp"
-                    android:ems="10"
-                    android:hint="idade"
-                    android:inputType="number"
-                    android:padding="5dp"
-                    android:textColor="@color/color_text"
-                    android:textColorHint="@color/color_hint"
-            />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:id="@+id/editFoneLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            app:startIconDrawable="@drawable/icone_phone"
-            app:layout_constraintEnd_toEndOf="@+id/editDataLayout"
-            app:layout_constraintStart_toStartOf="@+id/editDataLayout"
-            app:layout_constraintTop_toBottomOf="@+id/editDataLayout"
-            >
-
-                <com.santalu.maskara.widget.MaskEditText
-                    android:id="@+id/editFone"
-                    android:layout_width="350dp"
-                    android:layout_height="45dp"
-                    android:ems="10"
-                    android:hint="número de telefone"
-                    android:inputType="date"
-                    android:padding="5dp"
-                    android:textColor="@color/color_text"
-                    android:textColorHint="@color/color_hint"
-                    app:mask="+55 (__) _____ ____"
-                    app:maskCharacter="_"
-                    app:maskStyle="completable"
-                   />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:id="@+id/editEndLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/editFoneLayout"
-            app:layout_constraintStart_toStartOf="@+id/editFoneLayout"
-            app:layout_constraintTop_toBottomOf="@+id/editFoneLayout"
-            android:layout_marginTop="32dp"
-            app:startIconDrawable="@drawable/icone_localizacao"
-            >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editEnd"
-                    android:layout_width="350dp"
-                    android:layout_height="45dp"
-                    android:ems="10"
-                    android:hint="rua, numero da casa, bairro"
-                    android:inputType="textPersonName"
-                    android:padding="5dp"
-                    android:textColor="@color/color_text"
-                    android:textColorHint="@color/color_hint" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:clickable="true"
-            android:onClick="starttela2Activity"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editEndLayout"
-            app:srcCompat="@drawable/icone_seta_continuar"
-            tools:ignore="VectorDrawableCompat" />
-
-        <ImageButton
-            android:id="@+id/btnCamera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="128dp"
-            android:layout_marginLeft="128dp"
-            android:layout_marginEnd="200dp"
-            android:layout_marginRight="200dp"
-            android:src="@drawable/icone_camera"
-            app:layout_constraintBottom_toBottomOf="@+id/btnGaleria"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.714"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btnGaleria"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <ImageButton
-            android:id="@+id/btnGaleria"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="200dp"
-            android:layout_marginLeft="200dp"
-            android:layout_marginEnd="128dp"
-            android:layout_marginRight="128dp"
-            android:layout_marginBottom="472dp"
-            android:src="@drawable/icone_galeria"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.371"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/include"
+                            layout="@layout/toolbar" />
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/imagePerfil"
+                                    android:layout_width="130dp"
+                                    android:layout_height="130dp"
+                                    android:layout_marginVertical="30dp"
+                                    android:layout_marginStart="130dp"
+                                    android:layout_marginEnd="130dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:layout_weight="2"
+                                    android:background="@color/primeirofundopreto"
+                                    android:src="@drawable/imagem_fotouser"
+                                    app:civ_border_color="@color/primeirofundopreto"
+                                    app:civ_border_width="2dp"
+                                    app:layout_constraintBottom_toTopOf="@+id/btnGaleria"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/editNomeLayout"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginTop="32dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginRight="8dp"
+                                    android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/btnGaleria"
+                                    app:startIconDrawable="@drawable/icone_nome_prancheta">
+
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/editNome"
+                                            android:layout_width="350dp"
+                                            android:layout_height="45dp"
+                                            android:ems="10"
+                                            android:hint="nome"
+                                            android:inputType="textPersonName"
+                                            android:padding="5dp"
+                                            android:textColor="@color/color_text"
+                                            android:textColorHint="@color/color_hint" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/editDataLayout"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="32dp"
+                                    android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
+                                    app:layout_constraintEnd_toEndOf="@+id/editNomeLayout"
+                                    app:layout_constraintStart_toStartOf="@+id/editNomeLayout"
+                                    app:layout_constraintTop_toBottomOf="@+id/editNomeLayout"
+                                    app:startIconDrawable="@drawable/icone_bolo"
+
+
+                                    >
+
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/editData"
+                                            android:layout_width="350dp"
+                                            android:layout_height="45dp"
+                                            android:ems="10"
+                                            android:hint="idade"
+                                            android:inputType="number"
+                                            android:padding="5dp"
+                                            android:textColor="@color/color_text"
+                                            android:textColorHint="@color/color_hint" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/editFoneLayout"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="32dp"
+                                    android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
+                                    app:layout_constraintEnd_toEndOf="@+id/editDataLayout"
+                                    app:layout_constraintStart_toStartOf="@+id/editDataLayout"
+                                    app:layout_constraintTop_toBottomOf="@+id/editDataLayout"
+                                    app:startIconDrawable="@drawable/icone_phone">
+
+                                        <com.santalu.maskara.widget.MaskEditText
+                                            android:id="@+id/editFone"
+                                            android:layout_width="350dp"
+                                            android:layout_height="45dp"
+                                            android:ems="10"
+                                            android:hint="número de telefone"
+                                            android:inputType="date"
+                                            android:padding="5dp"
+                                            android:textColor="@color/color_text"
+                                            android:textColorHint="@color/color_hint"
+                                            app:mask="+55 (__) _____ ____"
+                                            app:maskCharacter="_"
+                                            app:maskStyle="completable" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/editEndLayout"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="32dp"
+                                    android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
+                                    app:layout_constraintEnd_toEndOf="@+id/editFoneLayout"
+                                    app:layout_constraintStart_toStartOf="@+id/editFoneLayout"
+                                    app:layout_constraintTop_toBottomOf="@+id/editFoneLayout"
+                                    app:startIconDrawable="@drawable/icone_localizacao">
+
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/editEnd"
+                                            android:layout_width="350dp"
+                                            android:layout_height="45dp"
+                                            android:ems="10"
+                                            android:hint="rua, numero da casa, bairro"
+                                            android:inputType="textPersonName"
+                                            android:padding="5dp"
+                                            android:textColor="@color/color_text"
+                                            android:textColorHint="@color/color_hint" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <ImageButton
+                                    android:id="@+id/btnCamera"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="130dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:src="@drawable/icone_camera"
+                                    app:layout_constraintBottom_toBottomOf="@+id/btnGaleria"
+                                    app:layout_constraintEnd_toStartOf="@+id/btnGaleria"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="@+id/btnGaleria"
+                                    app:layout_constraintVertical_bias="0.0" />
+
+                                <ImageButton
+                                    android:id="@+id/btnGaleria"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="200dp"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginEnd="128dp"
+                                    android:layout_marginBottom="16dp"
+                                    android:src="@drawable/icone_galeria"
+                                    app:layout_constraintBottom_toTopOf="@+id/editNomeLayout"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/imagePerfil" />
+
+                                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                    android:id="@+id/floatingActionButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="64dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:clickable="true"
+                                    android:onClick="starttela2Activity"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/editEndLayout"
+                                    app:srcCompat="@drawable/icone_seta_continuar"
+                                    tools:ignore="VectorDrawableCompat" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+        </ScrollView>
+
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
