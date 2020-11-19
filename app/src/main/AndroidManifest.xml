@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.fpm">
+
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -16,23 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.FPM">
-        <activity android:name=".activity.CadastroPrestadorServicoActivity"></activity>
-        <activity android:name=".activity.CadastroPrestadorActivity2" />
-        <activity android:name=".activity.CadastroPrestadorActivity" />
-        <activity
-            android:name=".activity.ServicosActivity"
-            android:label="@string/title_activity_servicos"
-            android:theme="@style/Theme.FPM.NoActionBar" />
-        <activity
-            android:name=".activity.NegociarActivity"
-            android:label="@string/title_activity_negociar"
-            android:theme="@style/Theme.FPM.NoActionBar" />
-        <activity android:name=".activity.ConfirmarPedidoActivity" />
-        <activity android:name=".activity.AvaliarPedidoActivity" />
-        <activity android:name=".activity.EditarPerfilActivity" />
-        <activity android:name=".activity.CadastroActivity2" />
-        <activity android:name=".activity.CadastroActivity" />
-        <activity android:name=".activity.EscolhaActivity" />
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -45,6 +30,27 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <activity
+            android:name=".activity.PesquisarEnderecoActivity"
+            android:label="@string/title_activity_pesquisar_endereco"></activity>
+        <activity android:name=".activity.CadastroEnderecoActivity" />
+        <activity android:name=".activity.CadastroPrestadorServicoActivity" />
+        <activity android:name=".activity.CadastroPrestadorActivity" />
+        <activity android:name=".activity.CadastroPrestadorActivity" />
+        <activity
+            android:name=".activity.ServicosActivity"
+            android:label="@string/title_activity_servicos"
+            android:theme="@style/Theme.FPM.NoActionBar" />
+        <activity
+            android:name=".activity.NegociarActivity"
+            android:label="@string/title_activity_negociar"
+            android:theme="@style/Theme.FPM.NoActionBar" />
+        <activity android:name=".activity.ConfirmarPedidoActivity" />
+        <activity android:name=".activity.AvaliarPedidoActivity" />
+        <activity android:name=".activity.EditarPerfilActivity" />
+        <activity android:name=".activity.CadastroContratanteActivity" />
+        <activity android:name=".activity.CadastroActivity" />
+        <activity android:name=".activity.EscolhaActivity" />
         <activity
             android:name=".activity.HomeActivity"
             android:label="@string/title_activity_home" />

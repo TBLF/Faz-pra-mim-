@@ -21,8 +21,10 @@ import static com.example.fpm.activity.LoginActivity.u;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CadastroActivity extends AppCompatActivity {
-    public static TextInputEditText nome,datanasc,ender;
+    public static TextInputEditText nome,datanasc;
     public static MaskEditText telefone;
+    public static int cidade = 0;
+    public static boolean entrou = false;
     private ImageButton buttonVoltar,btnCamera,btnGaleria;
     private static final int SELECA0_CAMERA =100;
     private static final int SELECA0_GALERIA =200;
@@ -40,7 +42,6 @@ public class CadastroActivity extends AppCompatActivity {
         nome= findViewById(R.id.editNome);
         telefone=findViewById(R.id.editFone);
         datanasc=findViewById(R.id.editData);
-        ender=findViewById(R.id.editEnd);
         btnCamera = findViewById(R.id.btnCamera);
         btnGaleria = findViewById(R.id.btnGaleria);
         buttonVoltar = findViewById(R.id.sair_toolbar);
@@ -79,7 +80,7 @@ public class CadastroActivity extends AppCompatActivity {
         boolean v = true;
         if (verificarCampos(v) == true) {
 
-            final Intent tela2Activity = new Intent(this, CadastroActivity2.class);
+            final Intent tela2Activity = new Intent(this, CadastroEnderecoActivity.class);
             startActivity(tela2Activity);
         }
         else{
@@ -138,11 +139,6 @@ public class CadastroActivity extends AppCompatActivity {
             Toast.makeText(this, "Você deve ter no mínimo 16 anos.", Toast.LENGTH_SHORT).show();
             v=false;
         }
-
-        if(ender.getText().toString().isEmpty()){
-            v=false;
-        }
-
         return v;
     }
 }

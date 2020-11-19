@@ -3,21 +3,16 @@ package com.example.fpm.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.Toast;
 
 import com.example.fpm.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CadastroPrestadorServicoActivity extends AppCompatActivity {
     public  static  int num;
@@ -68,7 +63,7 @@ public class CadastroPrestadorServicoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(num!=0){
-                    Intent i = new Intent(CadastroPrestadorServicoActivity.this,CadastroPrestadorActivity2.class) ;
+                    Intent i = new Intent(CadastroPrestadorServicoActivity.this, CadastroPrestadorActivity.class) ;
                     startActivity(i);
                 }else{
                     Toast.makeText(CadastroPrestadorServicoActivity.this, "Selecione ao menos um seviço para prosseguir", Toast.LENGTH_SHORT).show();

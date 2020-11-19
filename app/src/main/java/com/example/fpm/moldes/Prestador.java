@@ -10,10 +10,11 @@ public class Prestador {
     private int imagePrestador;
     private LatLng latLngPrestador;
     private String uid;
-    private String Tipo;
+    private int tipo;
     private String endereco;
-    private double latatual;
-    private double longatual;
+    private double latitude;
+    private double longitude;
+    private String descricao;
     private String email;
     private String senha;
     private String telefone;
@@ -41,12 +42,20 @@ public class Prestador {
     public Prestador() {
     }
 
-    public String getTipo() {
-        return Tipo;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setTipo(String Tipo) {
-        this.Tipo = Tipo;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
     }
 
     public String getNomePesquisa() {
@@ -137,19 +146,19 @@ public class Prestador {
         this.endereco = endereco;
     }
 
-    public double getLatatual() {
-        return latatual;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setLatatual(double latatual) {
-        this.latatual = latatual;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
-    public double getLongatual() {
-        return longatual;
+    public double getLongitude() {
+        return longitude;
     }
 
-    public void setLongatual(double longatual) {
-        this.longatual = longatual;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }

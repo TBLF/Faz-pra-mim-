@@ -14,6 +14,7 @@ import com.example.fpm.activity.CadastroActivity;
 public class EscolhaActivity extends AppCompatActivity {
     private Intent i;
     private ImageButton btnVoltar;
+    public static boolean escolha;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,11 +31,13 @@ public class EscolhaActivity extends AppCompatActivity {
     }
     public void IrContrante(View view){
         i=new Intent(this, CadastroActivity.class);
+        escolha = true;
         startActivity(i);
     }
     public void startcadastro_prestadorActivity (View view) {
-            final Intent cadastro_prestadorActivity = new Intent(this, CadastroPrestadorActivity.class);
-            startActivity(cadastro_prestadorActivity);
+        final Intent cadastro_prestadorActivity = new Intent(this, CadastroActivity.class);
+        escolha = false;
+        startActivity(cadastro_prestadorActivity);
     }
 
 

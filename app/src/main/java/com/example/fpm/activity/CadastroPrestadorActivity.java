@@ -1,150 +1,196 @@
 package com.example.fpm.activity;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.fpm.R;
+import com.example.fpm.config.Base64Custom;
+import com.example.fpm.config.ConfiguracaoFirebase;
+import com.example.fpm.moldes.Prestador;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.santalu.maskara.widget.MaskEditText;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+import java.io.ByteArrayOutputStream;
 
+import static com.example.fpm.activity.CadastroActivity.datanasc;
+import static com.example.fpm.activity.CadastroActivity.imagem;
+import static com.example.fpm.activity.CadastroActivity.nome;
+import static com.example.fpm.activity.CadastroActivity.telefone;
 import static com.example.fpm.activity.LoginActivity.u;
 
 public class CadastroPrestadorActivity extends AppCompatActivity {
-    public static TextInputEditText nome2,datanasc2,ender2,desc;
-    public static MaskEditText telefone2;
-    private ImageButton buttonVoltar,btnCamera,btnGaleria;
-    private static final int SELECA0_CAMERA =100;
-    private static final int SELECA0_GALERIA =200;
-    private CircleImageView circleImageViewPerfil;
-    public static Bitmap imagem2 ;
+
+    private TextInputEditText senha, senha2, email;
+    private DatabaseReference ref = ConfiguracaoFirebase.getFirebaseDatabase().child("Prestador");
+    private Prestador prestador = new Prestador();
+    private FirebaseAuth auth = ConfiguracaoFirebase.getFirebaseAutentication();
+    private ImageButton imageButtonVoltar;
+    private StorageReference storageReference;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro_prestador);
-
-        Intent i = new Intent(this,EscolhaActivity.class);
-
-        imagem2 = null;
-        u=false;
-        nome2= findViewById(R.id.editNome);
-        telefone2=findViewById(R.id.editFone);
-        datanasc2=findViewById(R.id.editData);
-        ender2=findViewById(R.id.editEnd);
-        desc =findViewById(R.id.editDes);
-        btnCamera = findViewById(R.id.btnCamera);
-        btnGaleria = findViewById(R.id.btnGaleria);
-        buttonVoltar = findViewById(R.id.sair_toolbar);
-        circleImageViewPerfil = findViewById(R.id.imagePerfil);
-
-        buttonVoltar.setOnClickListener(new View.OnClickListener() {
+        Intent i = new Intent(this, CadastroPrestadorServicoActivity.class);
+        setContentView(R.layout.activity_cadastro_contratante);
+        senha = findViewById(R.id.editSenha);
+        senha2 = findViewById(R.id.editSenha2);
+        email = findViewById(R.id.editEmail);
+        imageButtonVoltar = findViewById(R.id.sair_toolbar);
+        storageReference = ConfiguracaoFirebase.getFirebaseStorage();
+        Toast.makeText(this, "aqui", Toast.LENGTH_SHORT).show();
+        imageButtonVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(i);
             }
         });
-        btnCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if(i.resolveActivity(getPackageManager()) != null){
-                    startActivityForResult(i,SELECA0_CAMERA);
-                }
-
-            }
-        });
-
-        btnGaleria.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                if(i.resolveActivity(getPackageManager()) != null){
-                    startActivityForResult(i,SELECA0_GALERIA);
-                }
-            }
-        });
     }
-    public void starttela2Activity (View view) {
-        boolean v = true;
-        if (verificarCampos(v) == true) {
 
-            final Intent tela2Activity = new Intent(this, CadastroPrestadorServicoActivity.class);
-            startActivity(tela2Activity);
+    public void starttela2Activity2(View view) {
+
+        boolean v = false;
+        if (verificarCampos(v) == true) {
+            if(verificarSenhas(v)==true){
+
+
+                final Intent tela2Activity = new Intent(this, HomeActivity.class);
+                cadastrarClasse();
+                auth.createUserWithEmailAndPassword(prestador.getEmail(), prestador.getSenha()).addOnCompleteListener(CadastroPrestadorActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+
+                            try{
+                                String identificadorUsuario = Base64Custom.codificarBase64(prestador.getEmail());
+                                //Salvando dados
+
+                                prestador.setUid(identificadorUsuario);
+                                ref.child(auth.getUid().toString()).setValue(prestador);
+
+                                //Salvando Imagem
+                                if(u==true){
+                                    FirebaseAuth usuario = ConfiguracaoFirebase.getFirebaseAutentication();
+                                    String id = usuario.getCurrentUser().getUid();
+
+                                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                    imagem.compress(Bitmap.CompressFormat.JPEG,70,baos);
+                                    byte[] dadosimagem = baos.toByteArray();
+                                    StorageReference imageRef =storageReference
+                                            .child("Imagens")
+                                            .child("perfil")
+                                            .child(id+".jpeg");
+                                    UploadTask uploadTask = imageRef.putBytes(dadosimagem);
+                                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(CadastroPrestadorActivity.this, "Erro ao fazer upload da imagem", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            Toast.makeText(CadastroPrestadorActivity.this, "Sucesso ao fazer upload da imagem", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                                }
+                                startActivity(tela2Activity);
+                            }catch (Exception e){
+
+                            }
+
+
+                            finish();
+                        } else {
+
+                            String excecao = "";
+
+                            try {
+                                throw task.getException();
+                            } catch (FirebaseAuthWeakPasswordException e) {
+                                excecao = "Digite uma senha mais forte.";
+                            }catch (FirebaseAuthInvalidCredentialsException e){
+                                excecao = "Por favor, digite um e-mail válido.";
+                            }catch (FirebaseAuthUserCollisionException e) {
+                                excecao = "Esta conta ja foi cadastrada.";
+                            }catch (Exception e) {
+                                excecao ="Erro ao cadastrar usuário.";
+                                e.printStackTrace();
+                            }
+
+                            Toast.makeText(getApplicationContext(), excecao, Toast.LENGTH_LONG).show();
+
+                        }
+
+                    }
+                });
+            }else{
+                Toast.makeText(getApplicationContext(),"Senhas não conferem", Toast.LENGTH_LONG ).show();
+            }
+
         }
         else{
             Toast.makeText(getApplicationContext(),"Preencha todos os campos", Toast.LENGTH_LONG ).show();
         }
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == RESULT_OK){
 
-            try{
-                switch (requestCode){
-                    case SELECA0_CAMERA:
-                        imagem2 = (Bitmap)data.getExtras().get("data");
-                        break;
-                    case SELECA0_GALERIA:
-                        Uri localImagem = data.getData();
-                        imagem2 = MediaStore.Images.Media.getBitmap(getContentResolver(),localImagem);
-                        break;
-                }
-
-                if(imagem2!=null){
-                    u=true;
-                    circleImageViewPerfil.setImageBitmap(imagem2);
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public boolean verificarCampos(boolean v){
-        v=true;
-        if(nome2.getText().toString().isEmpty()){
-            v=false;
-        }
-        if(telefone2.getText().toString().isEmpty()){
+    public boolean verificarCampos ( boolean v){
+        v = true;
+        if (email.getText().toString().isEmpty()) {
             v = false;
         }
-        else if(telefone2.getUnMasked().toString().length()>11){
-            Toast.makeText(this, "Número de telefone inválido.", Toast.LENGTH_SHORT).show();
-            v=false;
+        if (senha.getText().toString().isEmpty()) {
+            v = false;
         }
-        else if(telefone2.getUnMasked().toString().length()<11){
-            Toast.makeText(this, "Número de telefone inválido.", Toast.LENGTH_SHORT).show();
-            v=false;
+        if (senha2.getText().toString().isEmpty()) {
+            v = false;
         }
-        if(datanasc2.getText().toString().isEmpty()){
-            v=false;
-        } else if(Integer.parseInt(datanasc2.getText().toString())<0 || Integer.parseInt(datanasc2.getText().toString())>120){
-            Toast.makeText(this, "Insira uma idade adequada.", Toast.LENGTH_SHORT).show();
-            v=false;
-        } else if(Integer.parseInt(datanasc2.getText().toString())<16){
-            Toast.makeText(this, "Você deve ter no mínimo 16 anos.", Toast.LENGTH_SHORT).show();
-            v=false;
-        }
-        if(ender2.getText().toString().isEmpty()){
-            v=false;
-        }
-        if(desc.getText().toString().isEmpty()){
-            v =false;
-        }
-
         return v;
     }
+
+    public boolean verificarSenhas(boolean v){
+        v=true;
+        if(!senha.getText().toString().equals(senha2.getText().toString())){
+            v=false;
+        }
+        return v;
+    }
+    public void cadastrarClasse () {
+        prestador.setEmail(email.getText().toString());
+        prestador.setSenha(senha.getText().toString());
+        prestador.setNome(nome.getText().toString());
+        prestador.setTelefone(telefone.getUnMasked().toString());
+        prestador.setIdade(Integer.parseInt(datanasc.getText().toString()));
+        prestador.setTipo(CadastroPrestadorServicoActivity.num);
+        prestador.setLatitude(PesquisarEnderecoActivity.lat);
+        prestador.setLongitude(PesquisarEnderecoActivity.lng);
+    }
+
 }

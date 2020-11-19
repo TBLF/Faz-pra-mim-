@@ -330,10 +330,10 @@ public class HomeActivity extends FragmentActivity implements
                     float cor;
                     if (num == 0) {
                         for (DataSnapshot d : snapshot.getChildren()) {
-                            String nome = d.child("Nome").getValue().toString();
+                            String nome = d.child("nome").getValue().toString();
                             String uId = d.child("uid").getValue().toString();
-                            double lat = (double) d.child("LatAtual").getValue();
-                            double longitude = (double) d.child("LongAtual").getValue();
+                            double lat = (double) d.child("latitude").getValue();
+                            double longitude = (double) d.child("longitude").getValue();
                             newPosition = new LatLng(lat, longitude);
 
                             mMap.addMarker(
@@ -347,12 +347,12 @@ public class HomeActivity extends FragmentActivity implements
                         }
                     } else {
                         for (DataSnapshot d : snapshot.getChildren()) {
-                            if (Integer.parseInt(d.child("Tipo").getValue().toString()) == num) {
+                            if (Integer.parseInt(d.child("tipo").getValue().toString()) == num) {
 
-                                String nome = d.child("Nome").getValue().toString();
+                                String nome = d.child("nome").getValue().toString();
                                 String uId = d.child("uid").getValue().toString();
-                                double lat = (double) d.child("LatAtual").getValue();
-                                double longitude = (double) d.child("LongAtual").getValue();
+                                double lat = (double) d.child("latitude").getValue();
+                                double longitude = (double) d.child("longitude").getValue();
                                 newPosition = new LatLng(lat, longitude);
 
                                 switch (num) {

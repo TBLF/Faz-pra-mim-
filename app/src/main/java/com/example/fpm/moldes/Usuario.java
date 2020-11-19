@@ -14,9 +14,20 @@ public class Usuario {
     private String telefone;
     private String data;
     private String endereco;
+    private double latitude;
+    private double longitude;
+    private String descricao;
 
     public Usuario() {
 
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public String getEndereco() {
@@ -25,6 +36,30 @@ public class Usuario {
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+
+    public String getNomePesquisa() {
+        return nomePesquisa;
+    }
+
+    public void setNomePesquisa(String nomePesquisa) {
+        this.nomePesquisa = nomePesquisa;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public String getData() {

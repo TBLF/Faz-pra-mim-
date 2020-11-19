@@ -36,7 +36,6 @@
                     android:src="@drawable/icone_vassoura2"
                     android:background="@drawable/forma_botao_customizado"
                     android:elevation="5dp"
-                    app:layout_constraintBottom_toTopOf="@+id/editDescricaoLayout"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.49"
                     app:layout_constraintStart_toStartOf="parent"
