@@ -134,7 +134,7 @@ public class HomeActivity extends FragmentActivity implements
                 Manifest.permission.READ_EXTERNAL_STORAGE
         };
         //reniciando variavel de verificação de imagem
-        u = true;
+        u = false;
 
         //carregando posição dos botões
         refImg.addValueEventListener(new ValueEventListener() {

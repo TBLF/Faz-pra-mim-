@@ -12,10 +12,14 @@ import android.widget.Toast;
 
 import com.example.fpm.R;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.textfield.TextInputEditText;
 
 import static com.example.fpm.activity.CadastroActivity.cidade;
 import static com.example.fpm.activity.CadastroActivity.entrou;
 import static com.example.fpm.activity.EscolhaActivity.escolha;
+import static com.example.fpm.activity.PesquisarEnderecoActivity.lat;
+import static com.example.fpm.activity.PesquisarEnderecoActivity.lng;
+import static com.example.fpm.activity.LoginActivity.bifurcacao;
 
 
 public class CadastroEnderecoActivity extends AppCompatActivity {
@@ -29,7 +33,8 @@ public class CadastroEnderecoActivity extends AppCompatActivity {
         AutoCompleteTextView textView = (AutoCompleteTextView)
                 findViewById(R.id.editEnd);
         textView.setAdapter(adapter);
-
+        TextInputEditText latlngedit = findViewById(R.id.editLatLng);
+        bifurcacao = true;
 
         if(cidade!=0){
             switch (cidade){
@@ -44,6 +49,10 @@ public class CadastroEnderecoActivity extends AppCompatActivity {
                     break;
             }
 
+        }
+        if(entrou==true){
+            latlngedit.setHint("");
+            latlngedit.setHint(String.valueOf(lat)+"/"+String.valueOf(lng));
         }
        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -70,6 +79,8 @@ public class CadastroEnderecoActivity extends AppCompatActivity {
         Intent i = new Intent(this, PesquisarEnderecoActivity.class);
         if(cidade != 0){
             startActivity(i);
+        }else{
+            Toast.makeText(this, "Selecione uma cidade", Toast.LENGTH_SHORT).show();
         }
 
     }

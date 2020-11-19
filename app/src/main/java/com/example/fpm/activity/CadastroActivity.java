@@ -21,9 +21,10 @@ import static com.example.fpm.activity.LoginActivity.u;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CadastroActivity extends AppCompatActivity {
-    public static TextInputEditText nome,datanasc;
+    public static TextInputEditText nome,datanasc,descricao;
     public static MaskEditText telefone;
     public static int cidade = 0;
+    private int cont =0;
     public static boolean entrou = false;
     private ImageButton buttonVoltar,btnCamera,btnGaleria;
     private static final int SELECA0_CAMERA =100;
@@ -42,6 +43,7 @@ public class CadastroActivity extends AppCompatActivity {
         nome= findViewById(R.id.editNome);
         telefone=findViewById(R.id.editFone);
         datanasc=findViewById(R.id.editData);
+        descricao = findViewById(R.id.editDescricao);
         btnCamera = findViewById(R.id.btnCamera);
         btnGaleria = findViewById(R.id.btnGaleria);
         buttonVoltar = findViewById(R.id.sair_toolbar);
@@ -83,8 +85,8 @@ public class CadastroActivity extends AppCompatActivity {
             final Intent tela2Activity = new Intent(this, CadastroEnderecoActivity.class);
             startActivity(tela2Activity);
         }
-        else{
-            Toast.makeText(getApplicationContext(),"Preencha todos os campos", Toast.LENGTH_LONG ).show();
+        else if(cont==3){
+            Toast.makeText(getApplicationContext(),"Preencha ao menos os campos de nome, telefone e idade", Toast.LENGTH_LONG ).show();
         }
     }
     @Override
@@ -117,9 +119,11 @@ public class CadastroActivity extends AppCompatActivity {
     public boolean verificarCampos(boolean v){
         v=true;
         if(nome.getText().toString().isEmpty()){
+            cont++;
             v=false;
         }
         if(telefone.getText().toString().isEmpty()){
+            cont++;
             v = false;
         }
         else if(telefone.getUnMasked().toString().length()>11){
@@ -131,6 +135,7 @@ public class CadastroActivity extends AppCompatActivity {
             v=false;
         }
         if(datanasc.getText().toString().isEmpty()){
+            cont++;
             v=false;
         } else if(Integer.parseInt(datanasc.getText().toString())<0 || Integer.parseInt(datanasc.getText().toString())>120){
             Toast.makeText(this, "Insira uma idade adequada.", Toast.LENGTH_SHORT).show();
@@ -139,6 +144,7 @@ public class CadastroActivity extends AppCompatActivity {
             Toast.makeText(this, "Você deve ter no mínimo 16 anos.", Toast.LENGTH_SHORT).show();
             v=false;
         }
+
         return v;
     }
 }

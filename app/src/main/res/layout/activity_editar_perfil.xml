@@ -90,6 +90,7 @@
                                 app:layout_constraintEnd_toEndOf="@+id/editNomeLayout"
                                 app:layout_constraintStart_toStartOf="@+id/editNomeLayout"
                                 app:layout_constraintTop_toBottomOf="@+id/editNomeLayout"
+                                app:layout_constraintVertical_bias="0.17000002"
                                 app:startIconDrawable="@drawable/icone_phone">
 
                                 <com.santalu.maskara.widget.MaskEditText
@@ -110,30 +111,76 @@
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/editEndLayout"
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginBottom="190dp"
-                                android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
+                                android:layout_marginStart="64dp"
+                                android:layout_marginEnd="64dp"
+                                android:layout_marginBottom="256dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="@+id/editFoneLayout"
-                                app:layout_constraintStart_toStartOf="@+id/editFoneLayout"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/editFoneLayout"
-                                app:startIconDrawable="@drawable/icone_localizacao">
+                                app:layout_constraintVertical_bias="0.77"
+                                app:startIconDrawable="@drawable/icone_servico">
 
-                                <com.google.android.material.textfield.TextInputEditText
+                                <AutoCompleteTextView
                                     android:id="@+id/editEnd"
                                     android:layout_width="350dp"
-                                    android:layout_height="45dp"
-                                    android:ems="10"
-                                    android:hint="endereço"
-                                    android:inputType="textPersonName"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="center"
+                                    android:hint="Cidade"
+                                    android:inputType="none"
                                     android:padding="5dp"
                                     android:textColor="@color/color_text"
                                     android:textColorHint="@color/color_hint" />
 
+
                             </com.google.android.material.textfield.TextInputLayout>
+
+                            <LinearLayout
+                                android:id="@+id/linearLayout2"
+                                android:layout_width="0dp"
+                                android:layout_height="50dp"
+                                android:layout_marginTop="16dp"
+                                android:orientation="horizontal"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="@+id/editEndLayout"
+                                app:layout_constraintStart_toStartOf="@+id/editEndLayout"
+                                app:layout_constraintTop_toBottomOf="@+id/editEndLayout"
+                                app:layout_constraintVertical_bias="0.0">
+
+
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/editLatLngLayout"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/editLatLng"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:ems="10"
+                                        android:enabled="false"
+                                        android:hint="Latitude/Longitude"
+                                        android:inputType="textPersonName"
+                                        android:padding="5dp"
+                                        android:textColor="@color/color_text"
+                                        android:textColorHint="@color/color_hint" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <ImageButton
+                                android:id="@+id/imgBtn_abrirMapa"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="5"
+                                android:onClick="abrirMapa"
+                                android:src="@drawable/icone_localizacao_atual" />
+                            </LinearLayout>
 
 
                             <com.google.android.material.floatingactionbutton.FloatingActionButton

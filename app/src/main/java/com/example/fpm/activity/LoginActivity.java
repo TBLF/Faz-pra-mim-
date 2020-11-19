@@ -31,6 +31,7 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity {
 
     public static boolean u =false;
+    public static boolean bifurcacao = false;
     private EditText textEmail;
     private EditText textSenha;
     private FirebaseAuth auth = ConfiguracaoFirebase.getFirebaseAutentication();

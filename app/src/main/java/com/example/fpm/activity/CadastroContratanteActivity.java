@@ -34,6 +34,7 @@ import static com.example.fpm.activity.CadastroActivity.datanasc;
 import static com.example.fpm.activity.CadastroActivity.imagem;
 import static com.example.fpm.activity.CadastroActivity.nome;
 import static com.example.fpm.activity.CadastroActivity.telefone;
+import static com.example.fpm.activity.CadastroActivity.descricao;
 import static com.example.fpm.activity.LoginActivity.u;
 
 
@@ -188,5 +189,6 @@ public class CadastroContratanteActivity extends AppCompatActivity {
         usuario.setIdade(Integer.parseInt(datanasc.getText().toString()));
         usuario.setLatitude(PesquisarEnderecoActivity.lat);
         usuario.setLongitude(PesquisarEnderecoActivity.lng);
+        usuario.setDescricao(descricao.getText().toString());
     }
 }

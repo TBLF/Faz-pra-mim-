@@ -133,6 +133,34 @@
 
                                 </com.google.android.material.textfield.TextInputLayout>
 
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/editDescricaoLayout"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="32dp"
+                                    android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
+                                    app:layout_constraintEnd_toEndOf="@+id/editFoneLayout"
+                                    app:layout_constraintStart_toStartOf="@+id/editFoneLayout"
+                                    app:layout_constraintTop_toBottomOf="@+id/editFoneLayout"
+                                    app:startIconDrawable="@drawable/icone_description"
+
+
+                                    >
+
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/editDescricao"
+                                            android:layout_width="350dp"
+                                            android:layout_height="90dp"
+                                            android:ems="10"
+                                            android:layout_gravity="top"
+                                            android:hint="Deixe uma mensagem sobre você aqui."
+                                            android:inputType="text"
+                                            android:padding="5dp"
+                                            android:textColor="@color/color_text"
+                                            android:textColorHint="@color/color_hint" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
 
                                 <ImageButton
                                     android:id="@+id/btnCamera"
@@ -171,7 +199,7 @@
                                     android:clickable="true"
                                     android:onClick="starttela2Activity"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/editFoneLayout"
+                                    app:layout_constraintTop_toBottomOf="@+id/editDescricaoLayout"
                                     app:srcCompat="@drawable/icone_seta_continuar"
                                     tools:ignore="VectorDrawableCompat" />
                         </androidx.constraintlayout.widget.ConstraintLayout>

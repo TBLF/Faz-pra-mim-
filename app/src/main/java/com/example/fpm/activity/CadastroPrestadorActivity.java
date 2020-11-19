@@ -41,6 +41,7 @@ import static com.example.fpm.activity.CadastroActivity.datanasc;
 import static com.example.fpm.activity.CadastroActivity.imagem;
 import static com.example.fpm.activity.CadastroActivity.nome;
 import static com.example.fpm.activity.CadastroActivity.telefone;
+import static com.example.fpm.activity.CadastroActivity.descricao;
 import static com.example.fpm.activity.LoginActivity.u;
 
 public class CadastroPrestadorActivity extends AppCompatActivity {
@@ -191,6 +192,7 @@ public class CadastroPrestadorActivity extends AppCompatActivity {
         prestador.setTipo(CadastroPrestadorServicoActivity.num);
         prestador.setLatitude(PesquisarEnderecoActivity.lat);
         prestador.setLongitude(PesquisarEnderecoActivity.lng);
+        prestador.setDescricao(descricao.getText().toString());
     }
 
 }

@@ -82,7 +82,7 @@ public class PerfilFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_perfil, container, false);
         FloatingActionButton floatingActionButton;
-        TextView textNome,textIdade,textEndereco,textTelefone;
+        TextView textNome,textDescricao;
         FirebaseUser user = UsuarioFireBase.getUsuarioAtual();
         String id = user.getUid();
         CircleImageView img;
@@ -94,9 +94,7 @@ public class PerfilFragment extends Fragment {
 
         floatingActionButton = v.findViewById(R.id.btn_editarperfil);
         textNome =  v.findViewById(R.id.text_nome);
-        textIdade =  v.findViewById(R.id.text_idade);
-        textTelefone =  v.findViewById(R.id.text_telefone);
-        textEndereco =  v.findViewById(R.id.text_endereco);
+        textDescricao = v.findViewById(R.id.text_descricao);
         img = v.findViewById(R.id.profile_image);
 
         if(u==true&&strg!=null){
@@ -111,16 +109,12 @@ public class PerfilFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    String nome,idade,endereco,telefone;
+                     String nome,descricao;
                      nome =  snapshot.child("nome").getValue().toString();
-                     idade = snapshot.child("idade").getValue().toString();
-                     endereco = snapshot.child("endereco").getValue().toString();
-                     telefone = snapshot.child("telefone").getValue().toString();
-
+                     descricao = snapshot.child("descricao").getValue().toString();
                      textNome.setText(nome);
-                     textIdade.setText(idade+" anos");
-                     textTelefone.setText(telefone);
-                     textEndereco.setText(endereco);
+                     textDescricao.setText(descricao);
+
                 }
             }
 

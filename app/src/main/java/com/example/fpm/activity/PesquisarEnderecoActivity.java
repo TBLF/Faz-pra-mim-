@@ -20,7 +20,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import static com.example.fpm.activity.CadastroEnderecoActivity.localcidade;
+import static com.example.fpm.activity.EditarPerfilActivity.localcidade2;
 import static com.example.fpm.activity.CadastroActivity.entrou;
+import static com.example.fpm.activity.EditarPerfilActivity.entrou2;
+import static com.example.fpm.activity.LoginActivity.bifurcacao;
 
 public class PesquisarEnderecoActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -36,6 +39,7 @@ public class PesquisarEnderecoActivity extends FragmentActivity implements OnMap
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         entrou =  true;
+        entrou2 = true;
     }
 
     /**
@@ -53,8 +57,11 @@ public class PesquisarEnderecoActivity extends FragmentActivity implements OnMap
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localcidade, 12));
-
+        if(bifurcacao==true){
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localcidade, 12));
+        }else{
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localcidade2, 12));
+        }
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
@@ -74,7 +81,12 @@ public class PesquisarEnderecoActivity extends FragmentActivity implements OnMap
     public void sairMapa(View view){
 
         if(lat!= 0.0){
-            Intent i = new Intent(this, CadastroEnderecoActivity.class);
+            Intent i;
+            if(bifurcacao==true){
+                i = new Intent(this, CadastroEnderecoActivity.class);
+            }else{
+                i = new Intent(this, EditarPerfilActivity.class);
+            }
             startActivity(i);
         }else{
             Toast.makeText(this, "Precisamos que você selecione a localização de sua residência no mapa.", Toast.LENGTH_SHORT).show();
