@@ -82,7 +82,7 @@ public class CadastroEnderecoActivity extends AppCompatActivity {
         Intent i;
         if(entrou == true){
 
-            if(escolha = false){
+            if(escolha == false){
                 i = new Intent(this, CadastroPrestadorServicoActivity.class);
             }else{
                 i = new Intent(this, CadastroContratanteActivity.class);
