@@ -81,39 +81,43 @@ public class PerfilFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_perfil, container, false);
+
+        //instanciando objetos
         FloatingActionButton floatingActionButton;
         TextView textNome,textDescricao;
-        FirebaseUser user = UsuarioFireBase.getUsuarioAtual();
-        String id = user.getUid();
+
         CircleImageView img;
 
-
+        //referenciando banco de dados
+        FirebaseUser user = UsuarioFireBase.getUsuarioAtual();
+        String id = user.getUid();
         DatabaseReference ref = ConfiguracaoFirebase.getFirebaseDatabase().child("Contratante").child(id);
         StorageReference storageReference = ConfiguracaoFirebase.getFirebaseStorage();
-        StorageReference  strg = storageReference.child("Imagens").child("perfil").child(id+".jpeg");
 
+        //referenciando objetos do fragment
         floatingActionButton = v.findViewById(R.id.btn_editarperfil);
         textNome =  v.findViewById(R.id.text_nome);
         textDescricao = v.findViewById(R.id.text_descricao);
         img = v.findViewById(R.id.profile_image);
 
-        if(u==true&&strg!=null){
-            Glide.with(getContext())
-                    .using(new FirebaseImageLoader())
-                    .load(strg)
-                    .into(img);
-
-        }
-
+        //buscando dados do banco de dados
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                     String nome,descricao;
+                     String nome,descricao,uid;
                      nome =  snapshot.child("nome").getValue().toString();
                      descricao = snapshot.child("descricao").getValue().toString();
+                     uid = snapshot.child("uid").getValue().toString();
                      textNome.setText(nome);
                      textDescricao.setText(descricao);
+                     //referenciando imagem a partir do uid do usuário
+
+                    StorageReference  strg = storageReference.child("Imagens").child("perfilContratante").child(uid+".jpeg");
+                    Glide.with(getContext())
+                            .using(new FirebaseImageLoader())
+                            .load(strg)
+                            .into(img);
 
                 }
             }

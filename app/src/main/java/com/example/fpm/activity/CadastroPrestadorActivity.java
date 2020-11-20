@@ -97,16 +97,13 @@ public class CadastroPrestadorActivity extends AppCompatActivity {
 
                                 //Salvando Imagem
                                 if(u==true){
-                                    FirebaseAuth usuario = ConfiguracaoFirebase.getFirebaseAutentication();
-                                    String id = usuario.getCurrentUser().getUid();
-
                                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                                     imagem.compress(Bitmap.CompressFormat.JPEG,70,baos);
                                     byte[] dadosimagem = baos.toByteArray();
                                     StorageReference imageRef =storageReference
                                             .child("Imagens")
-                                            .child("perfil")
-                                            .child(id+".jpeg");
+                                            .child("perfilPrestador")
+                                            .child(prestador.getUid()+".jpeg");
                                     UploadTask uploadTask = imageRef.putBytes(dadosimagem);
                                     uploadTask.addOnFailureListener(new OnFailureListener() {
                                         @Override

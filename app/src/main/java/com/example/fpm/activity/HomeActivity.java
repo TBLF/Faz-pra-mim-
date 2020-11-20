@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.fpm.config.ConfiguracaoFirebase;
 import com.example.fpm.R;
 import com.example.fpm.config.UsuarioFireBase;
@@ -29,6 +30,7 @@ import com.example.fpm.fragment.AnteriorFragment;
 import com.example.fpm.fragment.PerfilFragment;
 import com.example.fpm.fragment.PrincipalFragment;
 import com.example.fpm.moldes.Prestador;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -39,10 +41,12 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +54,7 @@ import java.util.List;
 import static com.example.fpm.fragment.PrincipalFragment.constraintLayout;
 import static com.example.fpm.fragment.PrincipalFragment.textNome;
 import static com.example.fpm.fragment.PrincipalFragment.button;
+import static com.example.fpm.fragment.PrincipalFragment.imagemPrestador;
 import static com.example.fpm.activity.LoginActivity.u;
 
 
@@ -294,9 +299,20 @@ public class HomeActivity extends FragmentActivity implements
         }
 
         if (!uid.isEmpty()) {
+
+            //recuperando nome e id
             UidPrestador = uid;
             NomePrestador = nome;
             constraintLayout.setVisibility(View.VISIBLE);
+
+            //recuperando foto de perfil
+            StorageReference storageReference = ConfiguracaoFirebase.getFirebaseStorage();
+            StorageReference  strg = storageReference.child("Imagens").child("perfilPrestador").child(uid+".jpeg");
+            Glide.with(getApplicationContext())
+                    .using(new FirebaseImageLoader())
+                    .load(strg)
+                    .into(imagemPrestador);
+
             aSwitch.setVisibility(View.INVISIBLE);
             textNome.setText(nome);
             button.setOnClickListener(new View.OnClickListener() {

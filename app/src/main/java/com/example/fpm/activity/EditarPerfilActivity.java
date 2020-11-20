@@ -163,7 +163,6 @@ public class EditarPerfilActivity extends AppCompatActivity {
     }
 
     public void Salvar(View view) {
-        Log.i("aqui","dentro do salvar");
         Intent tela2Activity = new Intent(this, HomeActivity.class);
         FirebaseAuth usuario = ConfiguracaoFirebase.getFirebaseAutentication();
         FirebaseUser user = usuario.getCurrentUser();
@@ -228,7 +227,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
         Log.i("aqui","dentro do verificar campos");
         cadastrarClasse();
         if(!nomeView.getText().toString().isEmpty()){
-            ref.child(id).setValue(usuarios.getNome());
+            ref.child(id).child("nome").setValue(usuarios.getNome());
         }
 
         if(!telefoneView.getUnMasked().toString().isEmpty()){
@@ -237,7 +236,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
             }else if(telefoneView.getUnMasked().toString().length()<11){
                 Toast.makeText(this, "Número de telefone iválido.", Toast.LENGTH_SHORT).show();
             } else {
-                ref.child(id).setValue(usuarios.getTelefone());
+                ref.child(id).child("telefone").setValue(usuarios.getTelefone());
             }
         }
         if(!latlngedit.getText().toString().isEmpty()){
@@ -247,7 +246,6 @@ public class EditarPerfilActivity extends AppCompatActivity {
 
     }
     public void cadastrarClasse () {
-        Log.i("aqui","dentro do cadastrar");
         if(!nomeView.getText().toString().isEmpty()) usuarios.setNome(nomeView.getText().toString());
         if(!telefoneView.getText().toString().isEmpty())usuarios.setTelefone(telefoneView.getText().toString());
         if(!latlngedit.getText().toString().isEmpty())usuarios.setLatitude(lat);usuarios.setLongitude(lng);

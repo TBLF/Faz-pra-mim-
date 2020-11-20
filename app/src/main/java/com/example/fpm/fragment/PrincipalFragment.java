@@ -35,6 +35,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link PrincipalFragment#newInstance} factory method to
@@ -47,6 +49,7 @@ public class PrincipalFragment extends Fragment{
     public static ConstraintLayout constraintLayout;
     public static  Button button;
     public static  TextView textNome;
+    public static CircleImageView imagemPrestador;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private List<Prestador> lista;
@@ -109,6 +112,7 @@ public class PrincipalFragment extends Fragment{
 
 
         //Referenciando objetos
+        imagemPrestador = v.findViewById(R.id.imagePrestador);
         textCont = v.findViewById(R.id.textQuant);
         btn_ir = v.findViewById(R.id.imageProx);
         constraintLayout= v.findViewById(R.id.bloco_de_dados);
