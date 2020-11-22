@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primeirofundopreto"
     tools:context=".activity.CadastroEnderecoActivity">
 
       <ScrollView
@@ -30,6 +31,7 @@
                                 <com.google.android.material.textfield.TextInputLayout
                                     android:id="@+id/editEndLayout"
                                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                                    android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="64dp"
@@ -41,7 +43,7 @@
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintVertical_bias="0.77"
-                                    app:startIconDrawable="@drawable/icone_servico">
+                                    app:startIconDrawable="@drawable/icone_localizacao">
 
                                     <AutoCompleteTextView
                                         android:id="@+id/editEnd"
@@ -72,6 +74,7 @@
                                     <com.google.android.material.textfield.TextInputLayout
                                         android:id="@+id/editLatLngLayout"
                                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                        android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1">

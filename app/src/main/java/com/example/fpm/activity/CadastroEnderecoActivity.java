@@ -19,7 +19,7 @@ import static com.example.fpm.activity.CadastroActivity.entrou;
 import static com.example.fpm.activity.EscolhaActivity.escolha;
 import static com.example.fpm.activity.PesquisarEnderecoActivity.lat;
 import static com.example.fpm.activity.PesquisarEnderecoActivity.lng;
-import static com.example.fpm.activity.LoginActivity.bifurcacao;
+import static com.example.fpm.activity.LoginActivity.bifurcacaoCadastro;
 
 
 public class CadastroEnderecoActivity extends AppCompatActivity {
@@ -34,7 +34,7 @@ public class CadastroEnderecoActivity extends AppCompatActivity {
                 findViewById(R.id.editEnd);
         textView.setAdapter(adapter);
         TextInputEditText latlngedit = findViewById(R.id.editLatLng);
-        bifurcacao = true;
+        bifurcacaoCadastro = true;
 
         if(cidade!=0){
             switch (cidade){
@@ -52,7 +52,7 @@ public class CadastroEnderecoActivity extends AppCompatActivity {
         }
         if(entrou==true){
             latlngedit.setHint("");
-            latlngedit.setHint(String.valueOf(lat)+"/"+String.valueOf(lng));
+            latlngedit.setText(String.valueOf(lat)+"/"+String.valueOf(lng));
         }
        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

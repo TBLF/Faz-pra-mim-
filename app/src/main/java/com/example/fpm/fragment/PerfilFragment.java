@@ -114,10 +114,16 @@ public class PerfilFragment extends Fragment {
                      //referenciando imagem a partir do uid do usuário
 
                     StorageReference  strg = storageReference.child("Imagens").child("perfilContratante").child(uid+".jpeg");
-                    Glide.with(getContext())
-                            .using(new FirebaseImageLoader())
-                            .load(strg)
-                            .into(img);
+                    String foto = strg.toString();
+                    if(foto!= null){
+                        Glide.with(getActivity())
+                                .using(new FirebaseImageLoader())
+                                .load(strg)
+                                .into(img);
+                    }
+                    else{
+                        img.setImageResource(R.drawable.imagem_fotouser);
+                    }
 
                 }
             }

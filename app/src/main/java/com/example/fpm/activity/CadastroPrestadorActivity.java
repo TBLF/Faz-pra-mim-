@@ -81,7 +81,7 @@ public class CadastroPrestadorActivity extends AppCompatActivity {
             if(verificarSenhas(v)==true){
 
 
-                final Intent tela2Activity = new Intent(this, HomeActivity.class);
+                final Intent tela2Activity = new Intent(this, HomePrestadorActivity.class);
                 cadastrarClasse();
                 auth.createUserWithEmailAndPassword(prestador.getEmail(), prestador.getSenha()).addOnCompleteListener(CadastroPrestadorActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override

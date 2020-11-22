@@ -23,7 +23,7 @@ import static com.example.fpm.activity.CadastroEnderecoActivity.localcidade;
 import static com.example.fpm.activity.EditarPerfilActivity.localcidade2;
 import static com.example.fpm.activity.CadastroActivity.entrou;
 import static com.example.fpm.activity.EditarPerfilActivity.entrou2;
-import static com.example.fpm.activity.LoginActivity.bifurcacao;
+import static com.example.fpm.activity.LoginActivity.bifurcacaoCadastro;
 
 public class PesquisarEnderecoActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -57,7 +57,7 @@ public class PesquisarEnderecoActivity extends FragmentActivity implements OnMap
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
         }
-        if(bifurcacao==true){
+        if(bifurcacaoCadastro ==true){
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localcidade, 12));
         }else{
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localcidade2, 12));
@@ -82,7 +82,7 @@ public class PesquisarEnderecoActivity extends FragmentActivity implements OnMap
 
         if(lat!= 0.0){
             Intent i;
-            if(bifurcacao==true){
+            if(bifurcacaoCadastro ==true){
                 i = new Intent(this, CadastroEnderecoActivity.class);
             }else{
                 i = new Intent(this, EditarPerfilActivity.class);

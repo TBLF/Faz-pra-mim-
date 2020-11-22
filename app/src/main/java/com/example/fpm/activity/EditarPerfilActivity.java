@@ -19,25 +19,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fpm.R;
-import com.example.fpm.config.Base64Custom;
 import com.example.fpm.config.ConfiguracaoFirebase;
 import com.example.fpm.moldes.Usuario;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.santalu.maskara.widget.MaskEditText;
@@ -45,7 +35,7 @@ import com.santalu.maskara.widget.MaskEditText;
 import java.io.ByteArrayOutputStream;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.example.fpm.activity.LoginActivity.bifurcacao;
+import static com.example.fpm.activity.LoginActivity.bifurcacaoCadastro;
 import static com.example.fpm.activity.LoginActivity.u;
 import static com.example.fpm.activity.HomeActivity.f;
 import static com.example.fpm.activity.PesquisarEnderecoActivity.lat;
@@ -88,7 +78,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
         btnGaleria = findViewById(R.id.btn_galeria);
         storageReference = ConfiguracaoFirebase.getFirebaseStorage();
         latlngedit= findViewById(R.id.editLatLng);
-        bifurcacao = false;
+        bifurcacaoCadastro = false;
 
         if(cidade2!=0) {
             switch (cidade2) {

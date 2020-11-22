@@ -8,6 +8,7 @@ public class Usuario {
     private String nomePesquisa;
     private String numero;
     private int idade;
+    private String foto;
     private String email;
     private String senha;
     private String cpf;
@@ -134,7 +135,11 @@ public class Usuario {
         this.uid = uid;
     }
 
-    public void salvar(){
+    public String getFoto() {
+        return foto;
+    }
 
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.fpm.activity;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -72,7 +73,8 @@ public class HomeActivity extends FragmentActivity implements
     private Switch aSwitch;
     private String[] appPermissions = null;
     private static final int CODIGO_PERMISSOES_REQUERIDAS = 1;
-    private ImageButton imageButton, imageButton2, imageButton3, btn_irTelaServic, cancel;
+    private ImageButton imageButton, imageButton2, imageButton3, btn_irTelaServic;
+    private LinearLayout botoesFiltro;
 
 
     @Override
@@ -132,6 +134,7 @@ public class HomeActivity extends FragmentActivity implements
         imageButton2 = findViewById(R.id.image_button_vassoura);
         imageButton = findViewById(R.id.image_button_tijolos);
         btn_irTelaServic = findViewById(R.id.btn_irTelaServicos);
+        botoesFiltro = findViewById(R.id.linearButtons);
 
         //atribuindo permissões a um array
         appPermissions = new String[]{
@@ -216,14 +219,17 @@ public class HomeActivity extends FragmentActivity implements
                 switch (menuItem.getItemId()) {
                     case R.id.ic_home:
                         aSwitch.setVisibility(View.VISIBLE);
+                        botoesFiltro.setVisibility(View.VISIBLE);
                         fragmentTransaction.replace(R.id.view_pager, new PrincipalFragment()).commit();
                         return true;
                     case R.id.ic_contacts:
                         aSwitch.setVisibility(View.INVISIBLE);
+                        botoesFiltro.setVisibility(View.INVISIBLE);
                         fragmentTransaction.replace(R.id.view_pager, new AnteriorFragment()).commit();
                         return true;
                     case R.id.ic_perfil:
                         aSwitch.setVisibility(View.INVISIBLE);
+                        botoesFiltro.setVisibility(View.INVISIBLE);
                         fragmentTransaction.replace(R.id.view_pager, new PerfilFragment()).commit();
                         return true;
                 }
@@ -307,11 +313,17 @@ public class HomeActivity extends FragmentActivity implements
 
             //recuperando foto de perfil
             StorageReference storageReference = ConfiguracaoFirebase.getFirebaseStorage();
-            StorageReference  strg = storageReference.child("Imagens").child("perfilPrestador").child(uid+".jpeg");
-            Glide.with(getApplicationContext())
-                    .using(new FirebaseImageLoader())
-                    .load(strg)
-                    .into(imagemPrestador);
+            StorageReference  strg = storageReference.child("Imagens").child("perfilPrestador").child(UidPrestador+".jpeg");
+            String foto = strg.toString();
+            if(foto!= null){
+                Glide.with(this)
+                        .using(new FirebaseImageLoader())
+                        .load(strg)
+                        .into(imagemPrestador);
+            }
+            else{
+                imagemPrestador.setImageResource(R.drawable.imagem_fotouser);
+            }
 
             aSwitch.setVisibility(View.INVISIBLE);
             textNome.setText(nome);

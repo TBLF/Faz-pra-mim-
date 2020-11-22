@@ -23,6 +23,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +35,9 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity {
 
     public static boolean u =false;
-    public static boolean bifurcacao = false;
+    public static boolean bifurcacaoCadastro = false;
+    public static boolean bifurcacaoLogin = false;
+    private List<String> emailPrestador, emailContratante;
     private EditText textEmail;
     private EditText textSenha;
     private FirebaseAuth auth = ConfiguracaoFirebase.getFirebaseAutentication();
@@ -44,6 +50,39 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         textEmail = findViewById(R.id.editEmail);
         textSenha = findViewById(R.id.editSenha);
+        emailContratante = new ArrayList<String>();
+        emailPrestador = new ArrayList<String>();
+        DatabaseReference ref =  ConfiguracaoFirebase.getFirebaseDatabase();
+        DatabaseReference refC = ref.child("Contratante");
+        refC.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for(DataSnapshot d : snapshot.getChildren()){
+                        emailContratante.add(d.child("email").getValue().toString());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        DatabaseReference refP = ref.child("Prestador");
+        refP.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot d : snapshot.getChildren()){
+                    emailPrestador.add(d.child("email").getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         //atribuindo permissões a um array
         appPermissions = new String[]{
                 Manifest.permission.ACCESS_FINE_LOCATION,
@@ -57,13 +96,32 @@ public class LoginActivity extends AppCompatActivity {
 
     public void startHomeActivity (View view){
         boolean v =false;
-        Intent HomeActivity = new Intent(this, com.example.fpm.activity.HomeActivity.class);
+        Intent homeActivity = new Intent(this, com.example.fpm.activity.HomeActivity.class);
+        Intent homePrestadorActivity = new Intent(this, com.example.fpm.activity.HomePrestadorActivity.class);
         if (verificarLogin(v) == true) {
             auth.signInWithEmailAndPassword(textEmail.getText().toString(),textSenha.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+                    boolean user = false;
                     if(task.isSuccessful()){
-                        startActivity(HomeActivity);
+                       for (String email : emailContratante){
+                           if(email.equals(textEmail.getText().toString())){
+                               user = true;
+                           }
+                       }
+                        for (String email : emailPrestador){
+                            if(email.equals(textEmail.getText().toString())){
+                               user = false;
+                            }
+                        }
+
+                        if(user==true){
+                            bifurcacaoLogin = false;
+                            startActivity(homeActivity);
+                        }else {
+                            bifurcacaoLogin = true;
+                            startActivity(homePrestadorActivity);
+                        }
                     }else{
 
                         String excecao ="";

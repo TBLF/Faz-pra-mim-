@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.fpm.R;
 import com.example.fpm.config.UsuarioFireBase;
 import com.example.fpm.moldes.Mensagem;
@@ -49,10 +50,10 @@ public class MensagensAdapter extends RecyclerView.Adapter<MensagensAdapter.MyVi
         String img = mensagem.getImagem();
 
         if(img != null){
-           // Uri url = Uri.parse(img);
-            //Glide.with(context).load(url).into(holder.imagem);
+             Uri url = Uri.parse(img);
+             Glide.with(context).load(url).into(holder.imagem);
 
-            holder.mensagem.setVisibility(View.GONE);
+             holder.mensagem.setVisibility(View.GONE);
         }else{
             holder.mensagem.setText(msg);
             holder.imagem.setVisibility(View.GONE);

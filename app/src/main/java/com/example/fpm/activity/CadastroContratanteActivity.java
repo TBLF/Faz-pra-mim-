@@ -2,6 +2,7 @@ package com.example.fpm.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -13,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.fpm.config.Base64Custom;
 import com.example.fpm.R;
 import com.example.fpm.config.ConfiguracaoFirebase;
+import com.example.fpm.config.UsuarioFireBase;
+import com.example.fpm.moldes.Mensagem;
 import com.example.fpm.moldes.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -112,6 +115,14 @@ public class CadastroContratanteActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                             Toast.makeText(CadastroContratanteActivity.this, "Sucesso ao fazer upload da imagem", Toast.LENGTH_SHORT).show();
+
+                                            imageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Uri> task) {
+                                                    Uri url = task.getResult();
+                                                    UsuarioFireBase.atualizarFotoUsuario(url);
+                                                }
+                                            });
                                         }
                                     });
 

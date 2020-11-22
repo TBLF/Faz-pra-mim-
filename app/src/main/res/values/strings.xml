@@ -102,4 +102,5 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_pesquisar_endereco">Map</string>
+    <string name="title_activity_home_prestador">Map</string>
 </resources>

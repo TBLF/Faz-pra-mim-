@@ -30,7 +30,7 @@ public class UsuarioFireBase {
         return user;
     }
 
-    /* public static boolean atualizarFotoUsuario(Uri url){
+     public static boolean atualizarFotoUsuario(Uri url){
        try {
             FirebaseUser user = getUsuarioAtual();
             UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
@@ -47,11 +47,11 @@ public class UsuarioFireBase {
             return true;
         }catch (Exception e){
             return false;
-        }*?
+        }
 
     }
     public static boolean atualizarDadosUsuario(String nome){
-       /* try {
+        try {
             FirebaseUser user = getUsuarioAtual();
             UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
                     .setDisplayName(nome)
@@ -70,5 +70,5 @@ public class UsuarioFireBase {
             return false;
         }
 
-    }*/
+    }
 }
