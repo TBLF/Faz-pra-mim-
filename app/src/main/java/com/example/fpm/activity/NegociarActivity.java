@@ -192,7 +192,9 @@ public class NegociarActivity extends AppCompatActivity {
         btnConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(j);
+                if(bifurcacaoLogin == false){
+                    startActivity(j);
+                }
             }
         });
 
@@ -234,7 +236,7 @@ public class NegociarActivity extends AppCompatActivity {
 
 
         StorageReference storageReference = ConfiguracaoFirebase.getFirebaseStorage();
-        StorageReference strg;
+        StorageReference strg ;
         if(bifurcacaoLogin == false){
             strg = storageReference.child("Imagens").child("perfilContratante").child(UidPrestador+".jpeg");
             textNomeConversa.setText(NomePrestador);

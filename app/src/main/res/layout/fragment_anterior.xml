@@ -4,50 +4,115 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     tools:context=".fragment.AnteriorFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <FrameLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <ScrollView
-            android:id="@+id/scroll_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#f1f1f1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
+                <ScrollView
+                    android:id="@+id/scrollView2"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="#000000"
-                    android:gravity="center_horizontal"
-                    android:paddingTop="10dp"
-                    android:text="Pedidos Anteriores"
-                    android:textAlignment="center"
-                    android:textColor="#ffffff"
-                    android:textSize="20dp" />
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0">
 
-                <ListView
-                    android:id="@+id/list_prestador"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/colorPrimary"
+                            android:gravity="center_horizontal"
+                            android:paddingTop="10dp"
+                            android:text="Agenda"
+                            android:textAlignment="center"
+                            android:textColor="#000"
+                            android:textSize="20dp" />
+
+                        <ListView
+                            android:id="@+id/list_agenda"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:background="#f1f1f1" />
+                    </LinearLayout>
+
+                </ScrollView>
+
+                <FrameLayout
+                    android:id="@+id/frameLayout5"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:background="#f1f1f1">
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/scrollView2">
 
-                </ListView>
-            </LinearLayout>
+                    <ScrollView
+                        android:id="@+id/scroll_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#f1f1f1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="1.0">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:background="#000000"
+                                android:gravity="center_horizontal"
+                                android:paddingTop="10dp"
+                                android:text="Pedidos Anteriores"
+                                android:textAlignment="center"
+                                android:textColor="#ffffff"
+                                android:textSize="20dp" />
+
+                            <ListView
+                                android:id="@+id/list_prestador"
+                                android:layout_width="match_parent"
+                                android:layout_height="300dp"
+                                android:background="#f1f1f1">
+
+                            </ListView>
+                        </LinearLayout>
+                    </ScrollView>
+                </FrameLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
         </ScrollView>
-    </FrameLayout>
+
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
