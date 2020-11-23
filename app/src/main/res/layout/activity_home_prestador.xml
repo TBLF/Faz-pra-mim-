@@ -7,54 +7,151 @@
     android:layout_height="match_parent"
     >
 
-    <fragment
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        map:layout_constraintBottom_toBottomOf="parent"
-        map:layout_constraintEnd_toEndOf="parent"
-        map:layout_constraintStart_toStartOf="parent"
-        map:layout_constraintTop_toTopOf="parent"
-        tools:context=".activity.HomePrestadorActivity" />
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        map:layout_constraintEnd_toEndOf="parent"
-        map:layout_constraintStart_toStartOf="parent"
-        map:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                map:layout_constraintBottom_toBottomOf="parent"
+                map:layout_constraintEnd_toEndOf="parent"
+                map:layout_constraintStart_toStartOf="parent"
+                map:layout_constraintTop_toTopOf="parent"
+                tools:context=".activity.HomePrestadorActivity" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                map:layout_constraintBottom_toBottomOf="parent"
+                map:layout_constraintEnd_toEndOf="parent"
+                map:layout_constraintStart_toStartOf="parent"
+                map:layout_constraintTop_toTopOf="parent"
+                map:layout_constraintVertical_bias="0.0">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="300dp"
+                        >
 
 
-        <ImageButton
-            android:layout_marginTop="20dp"
-            android:layout_marginHorizontal="35dp"
-            android:id="@+id/btn_conversas"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/forma_botao_customizado"
-            android:layout_weight="1"
-            android:onClick="abrirMensagens"
-            />
-        <ImageButton
-            android:layout_marginTop="20dp"
-            android:layout_marginHorizontal="35dp"
-            android:id="@+id/btn_agenda"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/forma_botao_customizado"
-            android:layout_weight="1"
-            />
-        <ImageButton
-            android:layout_marginTop="20dp"
-            android:layout_marginHorizontal="35dp"
-            android:id="@+id/btn_configuracoes"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/forma_botao_customizado"
-            android:layout_weight="1"
+                        <ImageButton
+                            android:id="@+id/btn_conversas"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginHorizontal="35dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/forma_botao_customizado"
+                            android:onClick="abrirMensagens" />
 
-            />
-    </LinearLayout>
+                        <ImageButton
+                            android:id="@+id/btn_configuracoes"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginHorizontal="35dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/forma_botao_customizado"
+
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="800dp"
+                        android:layout_marginTop="400dp"
+                        android:background="@drawable/forma_segundoplano3"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:src="@drawable/icone_barra"
+                            />
+
+                        <TextView
+                            android:layout_marginTop="15dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:text="Agenda"
+                            android:textColor="#a3a3a3"
+                            android:textSize="24dp"
+                            android:textAlignment="center"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#C8C8C8"/>
+                        <ScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ListView
+                                    android:id="@+id/agenda_prestador"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="350dp"/>
+
+                            </LinearLayout>
+                        </ScrollView>
+
+
+                        <TextView
+                            android:layout_marginTop="15dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:textColor="#a3a3a3"
+                            android:text="Histórico"
+                            android:textSize="24dp"
+                            android:textAlignment="center"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#C8C8C8"/>
+
+                        <ScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+                                    <ListView
+                                        android:id="@+id/historico_prestador"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="350dp"/>
+
+                                </LinearLayout>
+
+                        </ScrollView>
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
