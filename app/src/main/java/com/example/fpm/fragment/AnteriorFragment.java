@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.fpm.R;
+import com.example.fpm.adapter.ListAgendaPrestadorAdapter;
 import com.example.fpm.adapter.ListPrestadorAdapter;
 import com.example.fpm.config.Base64Custom;
 import com.example.fpm.config.ConfiguracaoFirebase;
@@ -38,9 +39,10 @@ public class AnteriorFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private List<Prestador> prestadorItem;
+    private List<Prestador> prestadorItemAgenda,prestadorItemHistorico;
     private ListView listPrestadorHistorico, listPrestadorAgenda;
     private ListPrestadorAdapter adapter;
+    private ListAgendaPrestadorAdapter  adapter2;
     public static ScrollView scrollView;
     private  StorageReference storageReference ;
 
@@ -91,8 +93,13 @@ public class AnteriorFragment extends Fragment {
         listPrestadorAgenda = v.findViewById(R.id.list_agenda);
         scrollView = v.findViewById(R.id.scroll_view);
 
-        //inacializando variáveis de uso
-        prestadorItem = new ArrayList<Prestador>();
+        //inicianlizando variáveis de uso
+        prestadorItemAgenda = new ArrayList<Prestador>();
+        prestadorItemHistorico = new ArrayList<Prestador>();
+        adapter = new ListPrestadorAdapter(prestadorItemHistorico, getActivity());
+        listPrestadorHistorico.setAdapter(adapter);
+        adapter2 = new ListAgendaPrestadorAdapter(prestadorItemAgenda, getActivity());
+        listPrestadorAgenda.setAdapter(adapter2);
 
         int i =0;
 
@@ -114,15 +121,14 @@ public class AnteriorFragment extends Fragment {
 
                          nomeAgenda = d.child("nome").getValue().toString();
                          tempoAgenda = d.child("tempo").getValue().toString();
-                         uid = d.child("uidPrestador").getValue().toString();
+                        // uid = d.child("uidPrestador").getValue().toString();
                          tipoPrestador = Integer.parseInt(d.child("tipo").getValue().toString());
 
-                        StorageReference  strg = storageReference.child("Imagens").child("perfilPrestador").child(uid+".jpeg");
+                        // StorageReference  strg = storageReference.child("Imagens").child("perfilPrestador").child(uid+".jpeg");
 
-                        prestadorItem.add(new Prestador(nomeAgenda, tipoPrestador, strg,tempoAgenda));
+                        prestadorItemAgenda.add(new Prestador(nomeAgenda, tipoPrestador,tempoAgenda));
                         //configurando listadapter de histórico do usuário
-                        adapter = new ListPrestadorAdapter(prestadorItem, getActivity());
-                        listPrestadorAgenda.setAdapter(adapter);
+                        adapter2.notifyDataSetChanged();
 
                     }
                 }
@@ -133,7 +139,6 @@ public class AnteriorFragment extends Fragment {
 
             }
         });
-
         //recuperando adições na agenda
 
         refHist.addValueEventListener(new ValueEventListener() {
@@ -144,15 +149,15 @@ public class AnteriorFragment extends Fragment {
                         String   nomeHistorico,dataHistorico ,uid;
                         nomeHistorico = d.child("nome").getValue().toString();
                         dataHistorico = d.child("data").getValue().toString();
-                        uid = d.child("uidPrestador").getValue().toString();
+                        //uid = d.child("uidPrestador").getValue().toString();
 
 
-                        StorageReference  strg = storageReference.child("Imagens").child("perfilPrestador").child(uid+".jpeg");
+                        //  StorageReference  strg = storageReference.child("Imagens").child("perfilPrestador").child(uid+".jpeg");
 
-                        prestadorItem.add(new Prestador(nomeHistorico, dataHistorico, strg));
+                        prestadorItemHistorico.add(new Prestador(nomeHistorico, dataHistorico));
                         //configurando listadapter de histórico do usuário
-                        adapter = new ListPrestadorAdapter(prestadorItem, getActivity());
-                        listPrestadorHistorico.setAdapter(adapter);
+
+                        adapter.notifyDataSetChanged();
 
                     }
                 }

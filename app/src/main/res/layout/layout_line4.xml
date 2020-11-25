@@ -27,13 +27,11 @@
 
             <ImageView
                 android:id="@+id/imageTipo_agenda"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:background="@drawable/forma_botao_customizado"
-                android:layout_marginTop="64dp"
-                android:layout_marginLeft="64dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginLeft="50dp"
                 android:elevation="5dp"
                 />
         </FrameLayout>
@@ -64,7 +62,7 @@
                     android:layout_marginLeft="10dp"
                     android:text="Data"
                     android:layout_weight="1"
-                    android:textColor="#aaaaaa"
+                    android:textColor="#a3a3a3"
                     android:textSize="15dp"
                     android:padding="5dp"
                     />
@@ -72,7 +70,7 @@
                     android:id="@+id/btn_cancelar_agenda"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:text="cancelar"
                     android:textSize="10dp"
                     android:textColor="#000000"

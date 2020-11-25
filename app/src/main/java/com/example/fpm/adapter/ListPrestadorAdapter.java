@@ -56,10 +56,12 @@ public class ListPrestadorAdapter extends BaseAdapter {
 
         textNome.setText(prestador.getNome());
         textData.setText(prestador.getData_servico());
-        Glide.with(view.getContext())
+        Image.setImageResource(R.drawable.imagem_fotouser);
+
+       /* Glide.with(view.getContext())
                 .using(new FirebaseImageLoader())
                 .load(prestador.getStrg())
-                .into(Image);
+                .into(Image);*/
 
 
         return view;

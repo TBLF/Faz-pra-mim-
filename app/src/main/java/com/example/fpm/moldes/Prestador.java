@@ -25,16 +25,14 @@ public class Prestador {
 
 
 
-    public Prestador(String nome, String data_servico, StorageReference storageReference) {
+    public Prestador(String nome, String data_servico) {
         this.nome = nome;
         this.data_servico = data_servico;
-        this.strg = storageReference;
     }
 
-    public Prestador(String nome, int tipo, StorageReference strg, String tempo) {
+    public Prestador(String nome, int tipo, String tempo) {
         this.nome = nome;
         this.tipo = tipo;
-        this.strg = strg;
         this.tempo = tempo;
     }
 

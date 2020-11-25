@@ -274,7 +274,7 @@ public class NegociarActivity extends AppCompatActivity {
         database = ConfiguracaoFirebase.getFirebaseDatabase();
         mensagensRef = database.child("Mensagem")
                 .child(idUsuarioRemetente)
-                .child(idUsuarioDestinatario);
+                 .child(idUsuarioDestinatario);
 
         negociacaoRef = database.child("Negociacao")
                 .child(idUsuarioRemetente)
@@ -358,31 +358,33 @@ public class NegociarActivity extends AppCompatActivity {
         negociacaoRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    if(bifurcacaoLogin == false){//contratante
-                            if(Integer.parseInt(snapshot.child("codigo").getValue().toString()) ==  1) {
-                                popupConstraint.setVisibility(View.VISIBLE);
-                                constraintLayout.setVisibility(View.GONE);
-                                barraMensagem.setClickable(false);
-                                textTitulo.setText(pesquisarNome("Prestador",idUsuarioDestinatario));
-                                textPreco.setText(snapshot.child("preco").getValue().toString());
-                                textTempo.setText(snapshot.child("tempo").getValue().toString()+" dias");
-                            }
+                if(snapshot.exists()) {
+                    int num;
+
+                    if (bifurcacaoLogin == false) {//contratante
+                        num = Integer.parseInt(snapshot.child("codigo").getValue().toString());
+                        if (num == 1) {
+                            popupConstraint.setVisibility(View.VISIBLE);
+                            constraintLayout.setVisibility(View.GONE);
+                            barraMensagem.setClickable(false);
+                            textTitulo.setText(pesquisarNome("Prestador", idUsuarioDestinatario));
+                            textPreco.setText(snapshot.child("preco").getValue().toString());
+                            textTempo.setText(snapshot.child("tempo").getValue().toString() + " dias");
                         }
 
+                    } else {//prestador
+                        num = Integer.parseInt(snapshot.child("codigo").getValue().toString());
+                        if (num == 0) {
+                            popupConstraint.setVisibility(View.VISIBLE);
+                            constraintLayout.setVisibility(View.GONE);
+                            barraMensagem.setClickable(false);
+                            textTitulo.setText(pesquisarNome("Contratante", idUsuarioDestinatario));
+                            textPreco.setText(snapshot.child("preco").getValue().toString());
+                            textTempo.setText(snapshot.child("tempo").getValue().toString() + " dias");
 
-
-                    }else{//prestador
-                            if(Integer.parseInt(snapshot.child("codigo").getValue().toString()) ==  0){
-                                popupConstraint.setVisibility(View.VISIBLE);
-                                constraintLayout.setVisibility(View.GONE);
-                                barraMensagem.setClickable(false);
-                                textTitulo.setText(pesquisarNome("Contratante",idUsuarioDestinatario));
-                                textPreco.setText(snapshot.child("preco").getValue().toString());
-                                textTempo.setText(snapshot.child("tempo").getValue().toString()+" dias");
-
-                            }
+                        }
                     }
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

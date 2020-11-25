@@ -1,12 +1,16 @@
 package com.example.fpm.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.fpm.R;
@@ -51,34 +55,33 @@ public class ListAgendaPrestadorAdapter extends BaseAdapter {
         TextView texttempo = view.findViewById(R.id.textTempo_agenda);
         ImageView Image = view.findViewById(R.id.ImagePrestador_agenda);
         ImageView imageTipo = view.findViewById(R.id.imageTipo_agenda);
-
+        Button btn_cancelar = view.findViewById(R.id.btn_cancelar_agenda);
         Prestador prestador = prestadorList.get(position);
 
         textNome.setText(prestador.getNome());
         texttempo.setText(prestador.getTempo()+"dias");
-        Glide.with(view.getContext())
-                .using(new FirebaseImageLoader())
-                .load(prestador.getStrg())
-                .into(Image);
+        Image.setImageResource(R.drawable.imagem_fotouser);
+        btn_cancelar.setBackgroundResource(R.color.colorPrimary);
+        btn_cancelar.setTextColor(Color.BLACK);
 
         switch (prestador.getTipo()){
             case 1:
-                imageTipo.setImageResource(R.drawable.icone_vassoura);
+                imageTipo.setImageResource(R.drawable.icone_vassoura3);
                 break;
             case 2:
-                imageTipo.setImageResource(R.drawable.icone_cachorro);
+                imageTipo.setImageResource(R.drawable.icone_cachorro3);
                 break;
             case 3:
-                imageTipo.setImageResource(R.drawable.icone_parede_de_tijolos);
+                imageTipo.setImageResource(R.drawable.icone_parede_de_tijolos3);
                 break;
             case 4:
-                imageTipo.setImageResource(R.drawable.icone_engenharia);
+                imageTipo.setImageResource(R.drawable.icone_engenharia3);
                 break;
             case 5:
-                imageTipo.setImageResource(R.drawable.icone_encanamento);
+                imageTipo.setImageResource(R.drawable.icone_encanamento3);
                 break;
             case 6:
-                imageTipo.setImageResource(R.drawable.icone_relampago);
+                imageTipo.setImageResource(R.drawable.icone_relampago3);
                 break;
         }
 
