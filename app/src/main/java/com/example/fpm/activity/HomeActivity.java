@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -66,9 +67,10 @@ public class HomeActivity extends FragmentActivity implements
         OnMapReadyCallback {
     public static int f;
     public static GoogleMap mMap;
-    private List<Prestador> prestadorLatLngId;
+    public static List<Prestador> prestadorLatLngId;
     public static String UidPrestador;
     public static String NomePrestador;
+    public static int tipoPrestador;
     public static int numeros[] = new int[3];
     private Switch aSwitch;
     private String[] appPermissions = null;
@@ -184,7 +186,7 @@ public class HomeActivity extends FragmentActivity implements
 
         } else if (f == 3) {
             fragmentTransaction.replace(R.id.view_pager, new AnteriorFragment()).commit();
-            menuItem = menu.getItem(2);
+            menuItem = menu.getItem(1);
             menuItem.setChecked(true);
             f = 0;
 
@@ -276,6 +278,10 @@ public class HomeActivity extends FragmentActivity implements
         return mMap;
     }
 
+    public static List<Prestador> getPrestadorLatLngId() {
+        return prestadorLatLngId;
+    }
+
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
@@ -283,6 +289,8 @@ public class HomeActivity extends FragmentActivity implements
         Integer clickCount = (Integer) marker.getTag();
         String uid = "";
         String nome = "";
+        int tip = 0;
+        ImageView imagemPrestadorBlocos = findViewById(R.id.imageTipo_blocoDados);
         Intent i = new Intent(this, NegociarActivity.class);
         // Check if a click count was set, then display the click count.
         if (clickCount != null) {
@@ -300,15 +308,18 @@ public class HomeActivity extends FragmentActivity implements
             if (prestadorLatLngId.get(ij).getLatLngPrestador().equals(marker.getPosition())) {
                 uid = prestadorLatLngId.get(ij).getUid();
                 nome = prestadorLatLngId.get(ij).getNome();
+                tip = prestadorLatLngId.get(ij).getTipo();
 
             }
         }
 
         if (!uid.isEmpty()) {
 
-            //recuperando nome e id
+            //recuperando nome ,id e tipo
             UidPrestador = uid;
             NomePrestador = nome;
+            tipoPrestador = tip;
+
             constraintLayout.setVisibility(View.VISIBLE);
 
             //recuperando foto de perfil
@@ -327,6 +338,26 @@ public class HomeActivity extends FragmentActivity implements
 
             aSwitch.setVisibility(View.INVISIBLE);
             textNome.setText(nome);
+            switch (tip) {
+                case 1:
+                    imagemPrestadorBlocos.setImageResource(R.drawable.icone_vassoura);
+                    break;
+                case 2:
+                    imagemPrestadorBlocos.setImageResource(R.drawable.icone_cachorro);
+                    break;
+                case 3:
+                    imagemPrestadorBlocos.setImageResource(R.drawable.icone_parede_de_tijolos);
+                    break;
+                case 4:
+                    imagemPrestadorBlocos.setImageResource(R.drawable.icone_engenharia);
+                    break;
+                case 5:
+                    imagemPrestadorBlocos.setImageResource(R.drawable.icone_encanamento);
+                    break;
+                case 6:
+                    imagemPrestadorBlocos.setImageResource(R.drawable.icone_relampago);
+                    break;
+            }
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -360,6 +391,7 @@ public class HomeActivity extends FragmentActivity implements
                         for (DataSnapshot d : snapshot.getChildren()) {
                             String nome = d.child("nome").getValue().toString();
                             String uId = d.child("uid").getValue().toString();
+                            int numero =  Integer.parseInt(d.child("tipo").getValue().toString());
                             double lat = (double) d.child("latitude").getValue();
                             double longitude = (double) d.child("longitude").getValue();
                             newPosition = new LatLng(lat, longitude);
@@ -370,7 +402,7 @@ public class HomeActivity extends FragmentActivity implements
                                             .title(nome)
                                             .icon(BitmapDescriptorFactory.defaultMarker())
                             );
-                            prestadorLatLngId.add(new Prestador(newPosition, uId, nome));
+                            prestadorLatLngId.add(new Prestador(newPosition, uId, nome ,numero));
 
                         }
                     } else {
@@ -379,6 +411,7 @@ public class HomeActivity extends FragmentActivity implements
 
                                 String nome = d.child("nome").getValue().toString();
                                 String uId = d.child("uid").getValue().toString();
+                                int numero =  Integer.parseInt(d.child("tipo").getValue().toString());
                                 double lat = (double) d.child("latitude").getValue();
                                 double longitude = (double) d.child("longitude").getValue();
                                 newPosition = new LatLng(lat, longitude);
@@ -412,7 +445,7 @@ public class HomeActivity extends FragmentActivity implements
                                                 .title(nome)
                                                 .icon(BitmapDescriptorFactory.defaultMarker(cor))
                                 );
-                                prestadorLatLngId.add(new Prestador(newPosition, uId, nome));
+                                prestadorLatLngId.add(new Prestador(newPosition, uId, nome,numero));
 
                             }
                         }

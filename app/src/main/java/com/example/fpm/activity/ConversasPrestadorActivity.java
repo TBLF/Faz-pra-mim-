@@ -9,16 +9,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.example.fpm.R;
 import com.example.fpm.adapter.ConversasPrestadorAdapter;
+import com.example.fpm.config.Base64Custom;
 import com.example.fpm.config.ConfiguracaoFirebase;
+import com.example.fpm.config.RecyclerItemClickListener;
 import com.example.fpm.config.UsuarioFireBase;
 import com.example.fpm.moldes.Conversa;
+import com.example.fpm.moldes.Usuario;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +38,7 @@ public class ConversasPrestadorActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private  DatabaseReference conversasRef;
     private  ChildEventListener childEventListenerConversas;
+    public static  String nomePesquisa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,22 +55,43 @@ public class ConversasPrestadorActivity extends AppCompatActivity {
         recyclerViewConversas.setHasFixedSize(true);
         recyclerViewConversas.setAdapter(conversasPrestadorAdapter);
 
-        UidContratante = "bWFyaW9AZ21haWwuY29t";
-        nomeContratante = "Luigi";
-
         //Configura conversas referencia do banco de dados
         String identificadorUsuario  = UsuarioFireBase.getIdentificadorusuario();
         reference = ConfiguracaoFirebase.getFirebaseDatabase();
         conversasRef =  reference.child("Conversa").child(identificadorUsuario);
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent i = new Intent(ConversasPrestadorActivity.this,NegociarActivity.class);
-                startActivity(i);
-            }
-        },5000);
+        //configurar evento de click
+        recyclerViewConversas.addOnItemTouchListener(
+
+                new RecyclerItemClickListener(
+                        this,
+                        recyclerViewConversas,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                Conversa conversaSelecionada = conversaLista.get(position);
+                                UidContratante=  conversaSelecionada.getIdDestinatario();
+                                pesquisarNome("Contratante",UidContratante);
+                                nomeContratante = nomePesquisa;
+                                Intent i = new Intent(ConversasPrestadorActivity.this, NegociarActivity.class);
+                                i.putExtra("chatContato",  conversaSelecionada.getUsuarioExibicao().getNome());
+                                startActivity(i);
+                            }
+
+                            @Override
+                            public void onLongItemClick(View view, int position) {
+
+                            }
+
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            }
+                        }
+                )
+        );
+        recuperarConversas();
+
     }
 
     @Override
@@ -102,6 +131,26 @@ public class ConversasPrestadorActivity extends AppCompatActivity {
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    private void pesquisarNome(String child, String uid) {
+        DatabaseReference reference = ConfiguracaoFirebase.getFirebaseDatabase().child(child);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot d : snapshot.getChildren()) {
+                        if (d.child("uid").getValue().toString().equals(uid)) {
+                            nomePesquisa = d.child("nome").getValue().toString();
+                        }
+                    }
+                }
             }
 
             @Override

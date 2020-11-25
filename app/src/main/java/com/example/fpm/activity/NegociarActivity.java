@@ -21,13 +21,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -42,7 +40,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -66,6 +63,7 @@ import static com.example.fpm.activity.ConversasPrestadorActivity.nomeContratant
 import static com.example.fpm.activity.HomeActivity.NomePrestador;
 import static com.example.fpm.activity.LoginActivity.bifurcacaoLogin;
 
+
 public class NegociarActivity extends AppCompatActivity {
     private EditText editText;
     private CurrencyEditText editPreco;
@@ -77,14 +75,16 @@ public class NegociarActivity extends AppCompatActivity {
     private ImageButton imageButtonCancel,imageButtonSair,imageButtonCancelPopup;
     private CircleImageView imgPrestador;
     private Button btnEnviar,btnConfirmar;
-    private String idUsuarioRemetente;
-    private String idUsuarioDestinatario;
+    public static String idUsuarioRemetente;
+    public static String idUsuarioDestinatario;
+    public static String tempoServico;
     private CurrencyEditText currencyEditText;
     private  StorageReference storageReference ;
     private Usuario usuarioDestinatario;
     private ConstraintLayout popupConstraint;
     private  Intent i,j;
     private LinearLayout barraMensagem;
+    private String urlFotoConversa;
 
     private RecyclerView recyclerView;
     private MensagensAdapter adapter;
@@ -93,6 +93,7 @@ public class NegociarActivity extends AppCompatActivity {
     private DatabaseReference database;
     private  DatabaseReference mensagensRef,negociacaoRef;
     private ChildEventListener childEventListenerMensagens;
+    public  static  String nomePesquisa;
 
     private static final int SELECA0_CAMERA =100;
 
@@ -120,7 +121,7 @@ public class NegociarActivity extends AppCompatActivity {
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                if(bifurcacaoLogin==false){
+                if(bifurcacaoLogin == false){
                     //contratante
                     salvarNegociacao(0);
                 }else{
@@ -237,19 +238,20 @@ public class NegociarActivity extends AppCompatActivity {
 
         StorageReference storageReference = ConfiguracaoFirebase.getFirebaseStorage();
         StorageReference strg ;
-        if(bifurcacaoLogin == false){
-            strg = storageReference.child("Imagens").child("perfilContratante").child(UidPrestador+".jpeg");
-            textNomeConversa.setText(NomePrestador);
-            usuarioDestinatario.setNome(NomePrestador);
-            usuarioDestinatario.setEmail(Base64Custom.decodificarBase64(UidPrestador));
+        if(bifurcacaoLogin == false ){//contratante
+            strg = storageReference.child("Imagens").child("perfilPrestador").child(UidPrestador+".jpeg");
             idUsuarioDestinatario = UidPrestador;
+            textNomeConversa.setText(NomePrestador);
+            usuarioDestinatario.setNome(pesquisarNome("Contratante",UsuarioFireBase.getIdentificadorusuario()));
+            Toast.makeText(this, usuarioDestinatario.getNome(), Toast.LENGTH_SHORT).show();
+            usuarioDestinatario.setEmail(UsuarioFireBase.getUsuarioAtual().getEmail());
 
-        }else{
-            strg = storageReference.child("Imagens").child("perfilPrestador").child(UidContratante+".jpeg");
+        }else{//prestador
+            strg = storageReference.child("Imagens").child("perfilContratante").child(UidContratante+".jpeg");
+            idUsuarioDestinatario = UidContratante;
             textNomeConversa.setText(nomeContratante);
             usuarioDestinatario.setNome(nomeContratante);
             usuarioDestinatario.setEmail(Base64Custom.decodificarBase64(UidContratante));
-            idUsuarioDestinatario = UidContratante;
         }
 
 
@@ -257,6 +259,7 @@ public class NegociarActivity extends AppCompatActivity {
         i = new Intent(this,HomeActivity.class);
         j = new Intent(this,ConfirmarPedidoActivity.class);
         idUsuarioRemetente = UsuarioFireBase.getIdentificadorusuario();
+
 
         //Configuração do Adpter;
         adapter = new MensagensAdapter(mensagens, getApplicationContext());
@@ -326,18 +329,42 @@ public class NegociarActivity extends AppCompatActivity {
         reference2.child("tempo").setValue(editTempo.getUnMasked());
         reference2.child("idRemetente").setValue(idUsuarioRemetente);
         reference2.child("idDestinatario").setValue(idUsuarioDestinatario);
+
+        tempoServico = editTempo.getUnMasked();
+    }
+
+    private String pesquisarNome(String child, String uid){
+        DatabaseReference reference = ConfiguracaoFirebase.getFirebaseDatabase().child(child);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for(DataSnapshot d : snapshot.getChildren()){
+                        if(d.child("uid").getValue().toString().equals(uid)){
+                           nomePesquisa = d.child("nome").getValue().toString();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return nomePesquisa;
     }
     private  void recuperarNegociacao(){
         negociacaoRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    if(bifurcacaoLogin == false){
+                    if(bifurcacaoLogin == false){//contratante
                             if(Integer.parseInt(snapshot.child("codigo").getValue().toString()) ==  1) {
                                 popupConstraint.setVisibility(View.VISIBLE);
                                 constraintLayout.setVisibility(View.GONE);
                                 barraMensagem.setClickable(false);
-                                textTitulo.setText(snapshot.child("idRemetente").getValue().toString());
+                                textTitulo.setText(pesquisarNome("Prestador",idUsuarioDestinatario));
                                 textPreco.setText(snapshot.child("preco").getValue().toString());
                                 textTempo.setText(snapshot.child("tempo").getValue().toString()+" dias");
                             }
@@ -345,12 +372,12 @@ public class NegociarActivity extends AppCompatActivity {
 
 
 
-                    }else{
+                    }else{//prestador
                             if(Integer.parseInt(snapshot.child("codigo").getValue().toString()) ==  0){
                                 popupConstraint.setVisibility(View.VISIBLE);
                                 constraintLayout.setVisibility(View.GONE);
                                 barraMensagem.setClickable(false);
-                                textTitulo.setText(snapshot.child("idRemetente").getValue().toString());
+                                textTitulo.setText(pesquisarNome("Contratante",idUsuarioDestinatario));
                                 textPreco.setText(snapshot.child("preco").getValue().toString());
                                 textTempo.setText(snapshot.child("tempo").getValue().toString()+" dias");
 
@@ -459,11 +486,70 @@ public class NegociarActivity extends AppCompatActivity {
 
     private void salvarConversa(Mensagem msg){
         Conversa conversaRemetente = new Conversa();
+       if(bifurcacaoLogin == false){
+           pesquisarUri(true);
+       }else{
+           pesquisarUri(false);
+       }
+        usuarioDestinatario.setFoto(urlFotoConversa);
+
         conversaRemetente.setIdRemetente(idUsuarioRemetente);
         conversaRemetente.setIdDestinatario(idUsuarioDestinatario);
         conversaRemetente.setUltimaMensagem(msg.getMensagem());
         conversaRemetente.setUsuarioExibicao(usuarioDestinatario);
 
+
         conversaRemetente.salvar();
+
+        conversaRemetente.setIdRemetente(idUsuarioDestinatario);
+        conversaRemetente.setIdDestinatario(idUsuarioRemetente);
+        conversaRemetente.setUltimaMensagem(msg.getMensagem());
+        conversaRemetente.setUsuarioExibicao(usuarioDestinatario);
+
+        conversaRemetente.salvar();
+
+    }
+
+    private void pesquisarUri(boolean bif){
+        StorageReference storageReference;
+        if(bif == true){
+            //contratante
+            FirebaseUser user = UsuarioFireBase.getUsuarioAtual();
+            String id = user.getUid();
+            DatabaseReference ref = ConfiguracaoFirebase.getFirebaseDatabase().child("Contratante").child(id);
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                       urlFotoConversa = snapshot.child("foto").getValue().toString();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }else{
+            //prestador
+            DatabaseReference ref = ConfiguracaoFirebase.getFirebaseDatabase().child("Contratante");
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                       for (DataSnapshot d :snapshot.getChildren()){
+                           if(d.child("uid").getValue().toString().equals(idUsuarioDestinatario)){
+                               urlFotoConversa = d.child("nome").getValue().toString();
+                           }
+                       }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
     }
 }

@@ -49,6 +49,8 @@ public class PrincipalFragment extends Fragment{
     public static ConstraintLayout constraintLayout;
     public static  Button button;
     public static  TextView textNome;
+    public static int cont ;
+    public static  int i ;
     public static CircleImageView imagemPrestador;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -105,7 +107,8 @@ public class PrincipalFragment extends Fragment{
 
         //Configurando mecanismo de pesquisa
         searchView = v.findViewById(R.id.searchViewPesquisa);
-        lista = new ArrayList<Prestador>();
+        lista = new ArrayList<>();
+        lista = homeActivity.getPrestadorLatLngId();
         textNome = v.findViewById(R.id.textNome);
         //Referenciando banco de dados
         reference = ConfiguracaoFirebase.getFirebaseDatabase().child("Prestador");
@@ -164,7 +167,7 @@ public class PrincipalFragment extends Fragment{
                     mMap = homeActivity.getmMap();
                     lista.clear();
                     LatLng newPosition = null;
-                    String nome = null, end=null;
+                    String nome = null, uId =null ;
                     double lat,longitude;
                     float cor;
                     int tipo;
@@ -173,13 +176,14 @@ public class PrincipalFragment extends Fragment{
 
                     for(DataSnapshot ds : snapshot.getChildren()){
 
-                        nome = ds.child("Nome").getValue().toString();
-                        end = ds.child("Endereco").getValue().toString();
-                        lat = (double) ds.child("LatAtual").getValue();
-                        longitude = (double) ds.child("LongAtual").getValue();
+                        nome = ds.child("nome").getValue().toString();
+                        lat = (double) ds.child("latitude").getValue();
+                        longitude = (double) ds.child("longitude").getValue();
                         newPosition = new LatLng(lat, longitude);
-                        tipo = Integer.parseInt(ds.child("Tipo").getValue().toString());
-                        lista.add(new Prestador(end,nome,newPosition));
+                        tipo = Integer.parseInt(ds.child("tipo").getValue().toString());
+                        uId = ds.child("uid").getValue().toString();
+
+                        lista.add( new Prestador(newPosition, uId, nome ,tipo));
 
                         switch (tipo){
                             case 1:
@@ -213,11 +217,14 @@ public class PrincipalFragment extends Fragment{
 
 
                     }
+
                     int total = lista.size();
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(newPosition,12));
-                    btn_ir.setVisibility(View.VISIBLE);
-                    textCont.setVisibility(View.VISIBLE);
-                    andarLista(total);
+                    if(newPosition!= null){
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(newPosition, 12));
+                        btn_ir.setVisibility(View.VISIBLE);
+                        textCont.setVisibility(View.VISIBLE);
+                        andarLista(total);
+                    }
 
                 }
 
@@ -230,15 +237,17 @@ public class PrincipalFragment extends Fragment{
     }
 
     private void andarLista (int total){
-        final int[] cont = {1};
         textCont.setText("0/"+String.valueOf(total));
+        cont = total;
+        i=1;
         btn_ir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(cont[0]!=total){
-                    textCont.setText(String.valueOf(cont[0])+"/"+String.valueOf(total));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lista.get(cont[0]).getLatLngPrestador(),12));
-                    cont[0]++;
+                if(cont != 0){
+                    textCont.setText(String.valueOf(i)+"/"+String.valueOf(total));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lista.get(cont).getLatLngPrestador(),12));
+                    cont--;
+                    i++;
                 }
 
             }

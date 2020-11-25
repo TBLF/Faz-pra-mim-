@@ -7,11 +7,22 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ScrollView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.fpm.R;
 import com.example.fpm.adapter.ListPrestadorAdapter;
+import com.example.fpm.config.Base64Custom;
+import com.example.fpm.config.ConfiguracaoFirebase;
+import com.example.fpm.config.UsuarioFireBase;
 import com.example.fpm.moldes.Prestador;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +39,10 @@ public class AnteriorFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private List<Prestador> prestadorItem;
-    private ListView listPrestador;
+    private ListView listPrestadorHistorico, listPrestadorAgenda;
     private ListPrestadorAdapter adapter;
     public static ScrollView scrollView;
+    private  StorageReference storageReference ;
 
 
     // TODO: Rename and change types of parameters
@@ -73,19 +85,86 @@ public class AnteriorFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =inflater.inflate(R.layout.fragment_anterior, container, false);
-        listPrestador = v.findViewById(R.id.list_prestador);
+
+        //referenciando objetos
+        listPrestadorHistorico = v.findViewById(R.id.list_prestador);
+        listPrestadorAgenda = v.findViewById(R.id.list_agenda);
         scrollView = v.findViewById(R.id.scroll_view);
 
+        //inacializando variáveis de uso
         prestadorItem = new ArrayList<Prestador>();
 
-        //configurando listadapter de histórico do usuário
-        prestadorItem.add(new Prestador("Tiago Brasil Lima", "23/12/2020", R.drawable.imagem_fotouser));
-        prestadorItem.add(new Prestador("Lúcia Pires", "25/03/2020", R.drawable.imagem_fotouser));
-        prestadorItem.add(new Prestador("Adriano", "30/109/2020", R.drawable.imagem_fotouser));
-        adapter = new ListPrestadorAdapter(prestadorItem, getActivity());
-        listPrestador.setAdapter(adapter);
+        int i =0;
+
+
+        //Referenciando banco de dados
+        DatabaseReference database = ConfiguracaoFirebase.getFirebaseDatabase();
+        FirebaseUser user = UsuarioFireBase.getUsuarioAtual();
+        DatabaseReference refAgenda = database.child("Agenda").child(Base64Custom.codificarBase64(user.getEmail()));
+        DatabaseReference refHist = database.child("Historico").child(Base64Custom.codificarBase64(user.getEmail()));
+
+        //recuperando mudanças na agenda
+        refAgenda.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for (DataSnapshot d : snapshot.getChildren()){
+                        String nomeAgenda,tempoAgenda,uid;
+                        int tipoPrestador;
+
+                         nomeAgenda = d.child("nome").getValue().toString();
+                         tempoAgenda = d.child("tempo").getValue().toString();
+                         uid = d.child("uidPrestador").getValue().toString();
+                         tipoPrestador = Integer.parseInt(d.child("tipo").getValue().toString());
+
+                        StorageReference  strg = storageReference.child("Imagens").child("perfilPrestador").child(uid+".jpeg");
+
+                        prestadorItem.add(new Prestador(nomeAgenda, tipoPrestador, strg,tempoAgenda));
+                        //configurando listadapter de histórico do usuário
+                        adapter = new ListPrestadorAdapter(prestadorItem, getActivity());
+                        listPrestadorAgenda.setAdapter(adapter);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        //recuperando adições na agenda
+
+        refHist.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for (DataSnapshot d : snapshot.getChildren()){
+                        String   nomeHistorico,dataHistorico ,uid;
+                        nomeHistorico = d.child("nome").getValue().toString();
+                        dataHistorico = d.child("data").getValue().toString();
+                        uid = d.child("uidPrestador").getValue().toString();
+
+
+                        StorageReference  strg = storageReference.child("Imagens").child("perfilPrestador").child(uid+".jpeg");
+
+                        prestadorItem.add(new Prestador(nomeHistorico, dataHistorico, strg));
+                        //configurando listadapter de histórico do usuário
+                        adapter = new ListPrestadorAdapter(prestadorItem, getActivity());
+                        listPrestadorHistorico.setAdapter(adapter);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         return v;
     }
-
 
 }

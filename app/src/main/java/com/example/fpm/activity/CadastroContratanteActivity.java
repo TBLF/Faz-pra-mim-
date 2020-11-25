@@ -121,6 +121,7 @@ public class CadastroContratanteActivity extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<Uri> task) {
                                                     Uri url = task.getResult();
                                                     UsuarioFireBase.atualizarFotoUsuario(url);
+                                                    ref.child(auth.getUid().toString()).child("foto").setValue(url.toString());
                                                 }
                                             });
                                         }

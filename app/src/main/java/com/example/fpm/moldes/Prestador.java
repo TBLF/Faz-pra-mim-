@@ -1,6 +1,7 @@
 package com.example.fpm.moldes;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.storage.StorageReference;
 
 public class Prestador {
 
@@ -19,21 +20,31 @@ public class Prestador {
     private String senha;
     private String telefone;
     private int idade;
+    private StorageReference strg;
+    private String tempo;
 
 
 
-    public Prestador(String nome, String data_servico, Integer imagePrestador) {
+    public Prestador(String nome, String data_servico, StorageReference storageReference) {
         this.nome = nome;
         this.data_servico = data_servico;
-        this.imagePrestador = imagePrestador;
+        this.strg = storageReference;
     }
 
-    public Prestador(LatLng latLngPrestador, String uid ,String nome) {
+    public Prestador(String nome, int tipo, StorageReference strg, String tempo) {
+        this.nome = nome;
+        this.tipo = tipo;
+        this.strg = strg;
+        this.tempo = tempo;
+    }
+
+    public Prestador(LatLng latLngPrestador, String uid , String nome, int t) {
         this.latLngPrestador = latLngPrestador;
         this.uid = uid;
         this.nome = nome;
+        this.tipo = t;
     }
-    public Prestador(String endereco,String nome,LatLng latLngPrestador) {
+    public Prestador(String nome,LatLng latLngPrestador) {
         this.endereco = endereco;
         this.nome = nome;
         this.latLngPrestador = latLngPrestador;
@@ -160,5 +171,21 @@ public class Prestador {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public StorageReference getStrg() {
+        return strg;
+    }
+
+    public void setStrg(StorageReference strg) {
+        this.strg = strg;
+    }
+
+    public String getTempo() {
+        return tempo;
+    }
+
+    public void setTempo(String tempo) {
+        this.tempo = tempo;
     }
 }

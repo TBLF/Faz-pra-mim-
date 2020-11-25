@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.example.fpm.R;
 import com.example.fpm.config.Base64Custom;
 import com.example.fpm.config.ConfiguracaoFirebase;
+import com.example.fpm.config.UsuarioFireBase;
 import com.example.fpm.moldes.Prestador;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -113,7 +115,14 @@ public class CadastroPrestadorActivity extends AppCompatActivity {
                                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                         @Override
                                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                            Toast.makeText(CadastroPrestadorActivity.this, "Sucesso ao fazer upload da imagem", Toast.LENGTH_SHORT).show();
+                                            imageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Uri> task) {
+                                                    Uri url = task.getResult();
+                                                    UsuarioFireBase.atualizarFotoUsuario(url);
+                                                    ref.child(auth.getUid().toString()).child("foto").setValue(url.toString());
+                                                }
+                                            });
                                         }
                                     });
 
